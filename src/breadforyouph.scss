@@ -1,0 +1,246 @@
+@import "~bootstrap/scss/bootstrap";
+
+@font-face {
+  font-family: "Orchide";
+  src: local("Orchide"), url(./fonts/Orchide.otf) format("truetype");
+}
+
+$blue: #4b5c7d;
+$blue-hover: #56698e;
+
+html {
+  scroll-behavior: smooth;
+}
+
+.company-name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .logo {
+    width: 100%;
+    max-width: 647px;
+    height: auto;
+  }
+
+  .slogan {
+    margin-top: 10px;
+  }
+}
+
+// override bootstrap default
+.btn {
+  background-color: $blue;
+  border-color: $blue;
+}
+
+.btn-primary:hover {
+  background-color: $blue;
+  border-color: $blue;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled):active {
+  background-color: $blue-hover;
+  border-color: $blue-hover;
+}
+
+.jumbotron {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+#btn-order {
+  margin-top: 16px;
+}
+
+.grid-img {
+  width: 100%;
+  padding-top: 32px;
+}
+
+.pictures-section {
+  padding-bottom: 50px;
+}
+
+.instagram-icon {
+  max-width: 60px;
+}
+
+.description {
+  width: 100%;
+
+  &.center {
+    text-align: center;
+  }
+}
+
+.instructions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.instruction-step {
+  margin-top: 32px;
+  width: 100%;
+
+  &:first-of-type {
+    margin-top: 0px;
+  }
+}
+
+.app-container {
+  .jumbotron {
+    background-color: white;
+  }
+
+  .app-header {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    .reason {
+      font-size: 20px;
+      margin-top: 10px;
+    }
+  }
+
+  section {
+    padding: 40px 10vw;
+    min-height: 95vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &:nth-of-type(odd) {
+      background-color: #f6f6f4;
+    }
+
+    .section-title {
+      font-size: 90px;
+      width: 100%;
+      margin-top: 16px;
+      margin-bottom: 16px;
+      font-family: Orchide;
+
+      &.center {
+        text-align: center;
+      }
+    }
+
+    $elem-spacing: 16px;
+
+    .comms-medium {
+      margin-top: $elem-spacing;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .comms-or {
+        width: 100%;
+        text-align: center;
+        margin: 4px 0;
+      }
+      .comms-option {
+        width: 100%;
+        text-align: center;
+
+        &:first-of-type {
+          margin-left: 0;
+        }
+      }
+    }
+
+    .message {
+      margin-top: $elem-spacing;
+      height: 100%;
+
+      .message-line {
+        margin-top: 4px;
+
+        span {
+          white-space: nowrap;
+          margin-top: 4px;
+          &.choice {
+            font-weight: normal;
+            border-radius: 16px;
+            padding: 2px 8px;
+          }
+
+          &.or {
+            font-weight: normal;
+          }
+        }
+      }
+    }
+  }
+
+  .btn-row {
+    display: flex;
+    justify-content: center;
+  }
+  .btn-order {
+    border: 2px solid red;
+    color: red;
+    font-weight: bold;
+    border-radius: 5px;
+    width: 100px;
+    text-align: center;
+    padding: 10px 5px;
+  }
+
+  footer {
+    padding: 16px;
+    width: 100%;
+    background-color: #1e1e1e;
+    min-height: 50px;
+    display: flex;
+    justify-content: flex-end;
+    color: white;
+    display: flex;
+    align-items: center;
+
+    .footer-item {
+      margin-right: 10px;
+
+      &:last-of-type {
+        margin: 0;
+      }
+    }
+  }
+
+  #the-bread {
+    $circle-diameter: 140px;
+    .flavor {
+      background-color: white;
+      height: 90px;
+      width: $circle-diameter;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 32px;
+    }
+  }
+}
+
+@include media-breakpoint-up(sm) {
+  .instruction-step {
+    margin-top: 32px;
+    width: 400px;
+
+    &:first-of-type {
+      margin-top: 0px;
+      width: 400px;
+    }
+  }
+
+  .description {
+    width: 400px;
+  }
+}

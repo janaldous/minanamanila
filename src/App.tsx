@@ -1,0 +1,120 @@
+import React from "react";
+import "./breadforyouph.scss";
+import logo from "./minanamanila_thin.png";
+import logoImage from "./minanamanila_thread.png";
+import Jumbotron from "react-bootstrap/Jumbotron";
+import instagramLogo from "./icons8-instagram-96.png";
+
+const defaultMessage = "Name:\nOrder:\nPayment:\nDelivery:";
+const uriDefaultMessage = encodeURIComponent(defaultMessage);
+const smsURI = `sms:09178001866;?&body=${uriDefaultMessage}`;
+
+function App() {
+  return (
+    <div className="app-container">
+      <Jumbotron>
+        <div className="company-name">
+          <img src={logo} alt="Logo" className="logo" />
+          <a
+            className="btn btn-primary btn-lg"
+            href="#how-to-order"
+            role="button"
+            id="btn-order"
+          >
+            Order
+          </a>
+        </div>
+      </Jumbotron>
+      <section id="the-bread">
+        <div className="row">
+          <div className="section-title center">The Bread</div>
+        </div>
+        <div className="row justify-content-center">
+          <div className="description">
+            <p>
+              Freshly baked and healthy banana bread with almonds, walnuts,
+              cinnamon, lemon zest and muscovado sugar.
+            </p>
+            <p>
+              Crunchy and nutty on the top and light and moist in the inside.
+            </p>
+            <p>
+              Only <b>₱165</b> per loaf (delivery included)
+            </p>
+          </div>
+        </div>
+      </section>
+      <section id="how-to-order">
+        <div className="row">
+          <div className="section-title center">How to Order</div>
+        </div>
+        <div className="instructions">
+          <div className="instruction-step">
+            <div>
+              DM{" "}
+              <a href="https://www.instagram.com/breadforyouph/">
+                @breadforyouph
+              </a>{" "}
+              or Text to <a href={smsURI}>09178001866</a>
+            </div>
+          </div>
+          <div className="instruction-step">
+            <div className="message">
+              <div className="message-line">
+                Name: Juan de la Cruz
+              </div>
+              <div className="message-line">
+                Order: 2 original banana bread
+              </div>
+              <div className="message-line">
+                Mode of payment: COD or GCash to 09178001866
+              </div>
+              <div className="message-line">
+                Delivery: Meet up location or Drop off address
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div className="section-title center">About us</div>
+        <div className="row justify-content-center">
+          <div className="description">
+            <p>
+              100% of profits go to the Covid-19 Relief Initiative by Saddleback
+              Sta. Rosa.
+            </p>
+            <p>
+              Aim: Food Pantry with the goal to feed 5,000 people from
+              Sitio Mangumpit, Sitio Buntog, Inchican, Don Jose, Bgry. San
+              Antonio, San Pedro, Sitio Hemedes.
+            </p>
+          </div>
+        </div>
+      </section>
+      <footer>
+        <div className="footer-item">Minana Manila</div>
+        <div className="footer-item">
+          <a href="https://www.instagram.com/breadforyouph/">
+            <picture>
+              <img
+                className="instagram-icon"
+                srcSet={instagramLogo}
+                alt="Instagram link"
+              />
+            </picture>
+          </a>
+          <picture>
+              <img
+                className="instagram-icon"
+                srcSet={logoImage}
+                alt="Minana Logo"
+              />
+            </picture>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+export default App;
