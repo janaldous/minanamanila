@@ -1,0 +1,37 @@
+.content {
+  background-color: #f6f6f4;
+  padding: 40px 10vw;
+  min-height: 95vh;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+
+.product-card {
+  margin: 16px;
+
+  .quantity {
+    line-height: 2rem;
+    width: 2rem;
+  }
+}
+
+#cd-cart {
+  position: absolute;
+  top: 65px;
+  right: -100%;
+
+  padding: 20px;
+
+  width: 400px;
+  -webkit-overflow-scrolling: touch;
+
+  transition: right 0.3s;
+  background-color: white;
+}
+
+#cd-cart.speed-in {
+  right: 5px;
+}

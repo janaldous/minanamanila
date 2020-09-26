@@ -1,0 +1,21 @@
+.order-confirmation-container {
+    .circle {
+        width: 100px;
+        height: 100px;
+        background-color: rgb(35, 145, 35);
+        border-radius: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .bold-title {
+        margin-bottom: 20px;
+    }
+
+    .description {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+}

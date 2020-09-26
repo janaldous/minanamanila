@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: "Orchide";
-  src: local("Orchide"), url(./fonts/Orchide.otf) format("truetype");
+  src: local("Orchide"), url(../../fonts/Orchide.otf) format("truetype");
 }
 
 $blue: #4b5c7d;
@@ -43,11 +43,6 @@ html {
 .btn-primary:not(:disabled):not(.disabled):active {
   background-color: $blue-hover;
   border-color: $blue-hover;
-}
-
-.jumbotron {
-  margin-top: 100px;
-  margin-bottom: 100px;
 }
 
 #btn-order {
@@ -92,7 +87,7 @@ html {
   }
 }
 
-.app-container {
+.home-container {
   .jumbotron {
     background-color: white;
   }
@@ -109,7 +104,7 @@ html {
   }
 
   section {
-    padding: 40px 10vw;
+    padding: 60px 10vw;
     min-height: 95vh;
 
     display: flex;
@@ -195,25 +190,6 @@ html {
     padding: 10px 5px;
   }
 
-  footer {
-    padding: 16px;
-    width: 100%;
-    background-color: #1e1e1e;
-    min-height: 50px;
-    display: flex;
-    justify-content: flex-end;
-    color: white;
-    display: flex;
-    align-items: center;
-
-    .footer-item {
-      margin-right: 10px;
-
-      &:last-of-type {
-        margin: 0;
-      }
-    }
-  }
 
   #the-bread {
     $circle-diameter: 140px;
