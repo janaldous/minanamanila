@@ -1,7 +1,9 @@
+@import "../_color.scss";
+
 footer {
     padding: 16px;
     width: 100%;
-    background-color: #1e1e1e;
+    background-color: $BLACK;
     min-height: 50px;
     display: flex;
     justify-content: flex-end;

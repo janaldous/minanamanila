@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import { Routes } from "Routes";
 import ArrowBackIosIcon from "@material-ui/icons/Menu";
 import Navbar from "react-bootstrap/Navbar";
+import { Item } from "./Item";
 
 const defaultMessage = "Name:\nOrder:\nPayment:\nDelivery:";
 const uriDefaultMessage = encodeURIComponent(defaultMessage);
@@ -39,6 +40,15 @@ function Home() {
           </a>
         </div>
       </Jumbotron>
+      <section id="items">
+        {[1, 2].map((x) => (
+          <div className="row mb-3">
+            {[1, 2, 3, 4, 5, 6].map((x) => (
+              <Item key={x} className="col" price={x * 100} />
+            ))}
+          </div>
+        ))}
+      </section>
       <section id="the-bread">
         <div className="row">
           <div className="section-title center">The Bread</div>
