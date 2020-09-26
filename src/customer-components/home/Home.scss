@@ -11,9 +11,12 @@
   src: local("Poppins-Regular"), url(../../fonts/Poppins-Regular.ttf) format("truetype");
 }
 
+body {
+  font-family: Poppins-Regular;
+}
+
 html {
   scroll-behavior: smooth;
-  font-family: Poppins-Regular;
 }
 
 .company-name {

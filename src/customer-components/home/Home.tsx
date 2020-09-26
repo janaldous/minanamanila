@@ -26,7 +26,11 @@ function Home() {
         <Navbar.Brand className="nav-brand" href="/">
           <img src={logo} alt="Logo" className="logo" />
         </Navbar.Brand>
-        <div className="flex-1-only"></div>
+        <div className="flex-1-only">
+          <div className="d-flex flex-row-reverse">
+            <div className="font-weight-bold">Login</div>
+          </div>
+        </div>
       </Navbar>
       <Jumbotron>
         <div className="company-name">
