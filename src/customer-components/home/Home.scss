@@ -6,6 +6,15 @@
   src: local("Poppins-Black"), url(../../fonts/Poppins-Black.ttf) format("truetype");
 }
 
+@font-face {
+  font-family: "Poppins-Regular";
+  src: local("Poppins-Regular"), url(../../fonts/Poppins-Regular.ttf) format("truetype");
+}
+
+body {
+  font-family: Poppins-Regular;
+}
+
 html {
   scroll-behavior: smooth;
 }
