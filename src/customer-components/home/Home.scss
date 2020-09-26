@@ -1,12 +1,10 @@
 @import "~bootstrap/scss/bootstrap";
+@import "../../_color.scss";
 
 @font-face {
-  font-family: "Orchide";
-  src: local("Orchide"), url(../../fonts/Orchide.otf) format("truetype");
+  font-family: "Poppins-Black";
+  src: local("Poppins-Black"), url(../../fonts/Poppins-Black.ttf) format("truetype");
 }
-
-$blue: #4b5c7d;
-$blue-hover: #56698e;
 
 html {
   scroll-behavior: smooth;
@@ -30,19 +28,19 @@ html {
 
 // override bootstrap default
 .btn {
-  background-color: $blue;
-  border-color: $blue;
+  background-color: $PURPLE;
+  border-color: $PURPLE;
 }
 
 .btn-primary:hover {
-  background-color: $blue;
-  border-color: $blue;
+  background-color: $PURPLE;
+  border-color: $PURPLE;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active,
 .btn-primary:not(:disabled):not(.disabled):active {
-  background-color: $blue-hover;
-  border-color: $blue-hover;
+  background-color: $PURPLE;
+  border-color: $PURPLE;
 }
 
 #btn-order {
@@ -120,7 +118,7 @@ html {
       width: 100%;
       margin-top: 16px;
       margin-bottom: 16px;
-      font-family: Orchide;
+      font-family: Poppins-Black;
 
       &.center {
         text-align: center;

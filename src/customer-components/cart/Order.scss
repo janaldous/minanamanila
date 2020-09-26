@@ -1,9 +1,12 @@
+@import "../../_color.scss";
+
 .custom-navbar {
   display: flex;
   align-items: center;
   padding-left: 30px;
   padding-right: 30px;
-  background-color: white;
+  background-color: $BLACK;
+  color: $PURPLE;
 
   .flex-1-only {
     flex: 1 1;
