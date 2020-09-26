@@ -36,6 +36,8 @@ html {
 .btn {
   background-color: $PURPLE;
   border-color: $PURPLE;
+  border-radius: 0;
+  font-weight: 500;
 }
 
 .btn-primary:hover {
@@ -114,10 +116,6 @@ html {
     display: flex;
     flex-direction: column;
     justify-content: center;
-
-    &:nth-of-type(odd) {
-      background-color: #f6f6f4;
-    }
 
     .section-title {
       font-size: 90px;

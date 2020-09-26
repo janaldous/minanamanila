@@ -31,7 +31,7 @@ function Home() {
       <Jumbotron>
         <div className="company-name">
           <a
-            className="btn btn-primary btn-lg"
+            className="btn btn-primary"
             href="#how-to-order"
             role="button"
             id="btn-order"
@@ -41,7 +41,7 @@ function Home() {
         </div>
       </Jumbotron>
       <section id="items">
-        {[1, 2].map((x) => (
+        {[1, 2, 3, 4].map((x) => (
           <div className="row mb-3">
             {[1, 2, 3, 4, 5, 6].map((x) => (
               <Item key={x} className="col" price={x * 100} />

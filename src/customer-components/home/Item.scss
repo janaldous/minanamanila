@@ -4,5 +4,10 @@
     .pic {
         height: 200px;
         background-color: $BLUE;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $BLUE-ACTIVE;
+        }
     }
 }
