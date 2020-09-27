@@ -1,0 +1,40 @@
+@import "../../color.scss";
+
+.product-detail {
+  .product-pic {
+    background-color: $BLUE;
+    height: 300px;
+    width: 300px;
+  }
+  .product-info {
+    margin: 20px;
+
+    .seller-container {
+      display: flex;
+
+      .profile-pic {
+        width: 50px;
+        height: 50px;
+        border-radius: 25px;
+        background-color: $BLUE;
+      }
+
+      .seller-info {
+        margin-left: 10px;
+      }
+    }
+
+    .contact-seller-container {
+      margin-top: 16px;
+    }
+
+    .description-title {
+      font-family: Poppins-Black;
+      font-size: 1.25rem;
+    }
+
+    .description-price {
+      font-size: 1.25rem;
+    }
+  }
+}

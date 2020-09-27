@@ -10,6 +10,7 @@ import NotFoundComponent from "NotFoundComponent";
 import { ProductPage, ProductRequiredDto } from "./product/ProductPage";
 import { Routes } from "Routes";
 import { CustomerContext, CheckoutCart } from "./CustomerContext";
+import { ProductDetailWithApi } from "./detail/ProductDetail";
 
 const Customer: React.FC<{}> = () => {
   const [cart, setCart] = React.useState<CheckoutCart>({
@@ -107,6 +108,9 @@ const Customer: React.FC<{}> = () => {
                 inactiveComponent={NotFoundComponent}
                 activeComponent={ProductPage}
               />
+            </Route>
+            <Route path={Routes.Detail}>
+              <ProductDetailWithApi />
             </Route>
             <Route path={Routes.Home}>
               <Home />
