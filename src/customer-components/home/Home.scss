@@ -3,12 +3,14 @@
 
 @font-face {
   font-family: "Poppins-Black";
-  src: local("Poppins-Black"), url(../../fonts/Poppins-Black.ttf) format("truetype");
+  src: local("Poppins-Black"),
+    url(../../fonts/Poppins-Black.ttf) format("truetype");
 }
 
 @font-face {
   font-family: "Poppins-Regular";
-  src: local("Poppins-Regular"), url(../../fonts/Poppins-Regular.ttf) format("truetype");
+  src: local("Poppins-Regular"),
+    url(../../fonts/Poppins-Regular.ttf) format("truetype");
 }
 
 body {
@@ -36,7 +38,7 @@ html {
 }
 
 // override bootstrap default
-.btn {  
+.btn {
   border-radius: 0;
   font-weight: 500;
 }
@@ -211,7 +213,6 @@ html {
     padding: 10px 5px;
   }
 
-
   #the-bread {
     $circle-diameter: 140px;
     .flavor {
@@ -239,5 +240,25 @@ html {
 
   .description {
     width: 400px;
+  }
+}
+
+#items {
+  .categories {
+    .category {
+      font-family: Poppins-Black;
+      font-size: 3rem;
+      cursor: pointer;
+      color: $BLACK;
+
+      &:hover {
+        background-color: $BLACK;
+        color: $WHITE;
+      }
+    }
+    a:hover {
+      text-decoration: none;
+      color: $BLACK;
+    }
   }
 }

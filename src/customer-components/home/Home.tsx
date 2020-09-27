@@ -5,8 +5,7 @@ import "./Home.scss";
 import { useFeatures } from "@paralleldrive/react-feature-toggles";
 import Button from "react-bootstrap/Button";
 import { Routes } from "Routes";
-import { Item } from "./Item";
-import { MyNavbar } from "customer-components/navbar/Navbar";
+import { ProductGrid } from "customer-components/productgrid/ProductGrid";
 
 const defaultMessage = "Name:\nOrder:\nPayment:\nDelivery:";
 const uriDefaultMessage = encodeURIComponent(defaultMessage);
@@ -17,7 +16,6 @@ function Home() {
 
   return (
     <div className="home-container">
-      <MyNavbar />
       <Jumbotron>
         <div className="company-name">
           <a
@@ -31,13 +29,14 @@ function Home() {
         </div>
       </Jumbotron>
       <section id="items">
-        {[1, 2, 3, 4].map((x) => (
-          <div className="row mb-3">
-            {[1, 2, 3, 4, 5, 6].map((x) => (
-              <Item key={x} className="col" price={x * 100} />
-            ))}
-          </div>
-        ))}
+        <div className="categories d-flex">
+          {["Men", "Women", "Children"].map((x) => (
+            <Link to={Routes.SearchResult} key={x}>
+              <div className="pr-3 pb-3 category">{x}</div>
+            </Link>
+          ))}
+        </div>
+        <ProductGrid />
       </section>
       <section id="the-bread">
         <div className="row">

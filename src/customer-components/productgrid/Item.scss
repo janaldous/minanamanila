@@ -3,11 +3,8 @@
 .product-item {
     .pic {
         height: 200px;
-        background-color: $BLUE;
+        width: 200px;
+        object-fit: cover;
         cursor: pointer;
-
-        &:hover {
-            background-color: $BLUE-ACTIVE;
-        }
     }
 }

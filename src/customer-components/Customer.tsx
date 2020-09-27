@@ -11,6 +11,8 @@ import { ProductPage, ProductRequiredDto } from "./product/ProductPage";
 import { Routes } from "Routes";
 import { CustomerContext, CheckoutCart } from "./CustomerContext";
 import { ProductDetailWithApi } from "./detail/ProductDetail";
+import { SearchResults } from "./search/Search";
+import { NavbarPage } from "./withNavbar/NavbarPage";
 
 const Customer: React.FC<{}> = () => {
   const [cart, setCart] = React.useState<CheckoutCart>({
@@ -109,11 +111,20 @@ const Customer: React.FC<{}> = () => {
                 activeComponent={ProductPage}
               />
             </Route>
+            <Route path={Routes.SearchResult}>
+              <NavbarPage>
+                <SearchResults />
+              </NavbarPage>
+            </Route>
             <Route path={Routes.Detail}>
-              <ProductDetailWithApi />
+              <NavbarPage>
+                <ProductDetailWithApi />
+              </NavbarPage>
             </Route>
             <Route path={Routes.Home}>
-              <Home />
+              <NavbarPage>
+                <Home />
+              </NavbarPage>
             </Route>
           </Switch>
         </Router>

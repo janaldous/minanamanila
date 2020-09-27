@@ -1,9 +1,9 @@
 import React from "react";
-import { MyNavbar } from "customer-components/navbar/Navbar";
 import "./ProductDetail.scss";
 import Button from "react-bootstrap/Button";
 import { formatCurrency } from "utils/CurrencyFormatterUtil";
 import ReactMarkdown from "react-markdown";
+import { ProductGrid } from "customer-components/productgrid/ProductGrid";
 
 export interface ProductDetailProps {
   username: string;
@@ -45,12 +45,11 @@ export const ProductDetail: React.FC<ProductDetailProps> = (props) => {
 
   return (
     <div className="product-detail">
-      <MyNavbar />
       <div className="row">
-        <div className="col d-flex justify-content-center">
+        <div className="col-6 d-flex justify-content-center">
           <div className="product-pic"></div>
         </div>
-        <div className="col product-info">
+        <div className="col-6 product-info">
           <div className="seller-container">
             <div className="seller-profile">
               <div className="profile-pic"></div>
@@ -75,7 +74,10 @@ export const ProductDetail: React.FC<ProductDetailProps> = (props) => {
               {formatCurrency(props.price)}
             </div>
             <div className="mt-3">
-              <ReactMarkdown source={props.productDescription} escapeHtml={false} />
+              <ReactMarkdown
+                source={props.productDescription}
+                escapeHtml={false}
+              />
             </div>
             <div className="mt-3">{props.size}</div>
             <div className="mt-3">{props.condition}</div>
@@ -90,6 +92,10 @@ export const ProductDetail: React.FC<ProductDetailProps> = (props) => {
             </Button>
           </div>
         </div>
+      </div>
+      <div className="d-flex flex-column mb-3 similar-items">
+        <div className="h1">Similar items</div>
+        <ProductGrid maxRows={2} />
       </div>
     </div>
   );
