@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import { formatCurrency } from "utils/CurrencyFormatterUtil";
 import ReactMarkdown from "react-markdown";
 import { ProductGrid } from "customer-components/productgrid/ProductGrid";
+import { ProductPicture } from "customer-components/productgrid/ProductPicture";
 
 export interface ProductDetailProps {
   username: string;
@@ -47,7 +48,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = (props) => {
     <div className="product-detail">
       <div className="row">
         <div className="col-6 d-flex justify-content-center">
-          <div className="product-pic"></div>
+          <ProductPicture id={1} className="w-100" />
         </div>
         <div className="col-6 product-info">
           <div className="seller-container">
@@ -93,7 +94,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = (props) => {
           </div>
         </div>
       </div>
-      <div className="d-flex flex-column mb-3 similar-items">
+      <div className="d-flex flex-column mt-3 mb-3 similar-items">
         <div className="h1">Similar items</div>
         <ProductGrid maxRows={2} />
       </div>

@@ -18,14 +18,7 @@ function Home() {
     <div className="home-container">
       <Jumbotron>
         <div className="company-name">
-          <a
-            className="btn btn-primary"
-            href="#how-to-order"
-            role="button"
-            id="btn-order"
-          >
-            Order
-          </a>
+          <div className="h1">Minana Manila</div>
         </div>
       </Jumbotron>
       <section id="items">

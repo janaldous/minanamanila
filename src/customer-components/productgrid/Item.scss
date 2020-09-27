@@ -1,10 +1,27 @@
 @import "../../color";
 
 .product-item {
+  .pic-container {
+    height: 200px;
+    width: 200px;
+
     .pic {
-        height: 200px;
-        width: 200px;
-        object-fit: cover;
-        cursor: pointer;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      cursor: pointer;
+      top: 0;
     }
+
+    .pic-overlay {
+      height: 100%;
+      width: 100%;
+      background-color: transparent;
+      top: 0;
+
+      &:hover {
+        background-color: transparentize($BLUE, 0.4);
+      }
+    }
+  }
 }

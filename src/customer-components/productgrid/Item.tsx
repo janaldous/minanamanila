@@ -13,8 +13,10 @@ export const Item: React.FC<ItemProps> = (props) => {
   return (
     <div className={`product-item ${props.className}`}>
       <Link to={Routes.Detail}>
-        {/* <div className="pic"></div> */}
-        <ProductPicture id={props.id} className="pic" />
+        <div className="pic-container position-relative">
+          <ProductPicture id={props.id} className="pic position-absolute" />
+          <div className="pic-overlay position-absolute"></div>
+        </div>
       </Link>
       <div className="price font-weight-bold">{`₱${props.id * 100}`}</div>
     </div>
