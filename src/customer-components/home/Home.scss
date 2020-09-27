@@ -36,22 +36,38 @@ html {
 }
 
 // override bootstrap default
-.btn {
-  background-color: $PURPLE;
-  border-color: $PURPLE;
+.btn {  
   border-radius: 0;
   font-weight: 500;
 }
 
-.btn-primary:hover {
-  background-color: $PURPLE;
-  border-color: $PURPLE;
+.btn-secondary {
+  background-color: transparent;
+  border-color: transparent;
+  color: $BLUE;
+  font-weight: 500;
+
+  &:hover {
+    background-color: $BLUE;
+    border-color: $BLUE;
+    color: $WHITE;
+  }
+
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled):active {
+    background-color: $PURPLE;
+    border-color: $PURPLE;
+  }
 }
 
-.btn-primary:not(:disabled):not(.disabled):active,
-.btn-primary:not(:disabled):not(.disabled):active {
+.btn-primary {
   background-color: $PURPLE;
   border-color: $PURPLE;
+
+  &:hover {
+    background-color: $PURPLE;
+    border-color: $PURPLE;
+  }
 }
 
 #btn-order {
