@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Home.scss";
-import Button from "react-bootstrap/Button";
 import { Routes } from "Routes";
 import { ProductGrid } from "customer-components/productgrid/ProductGrid";
 import featuredPicture from "../featured.jpg";
