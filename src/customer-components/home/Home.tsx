@@ -1,19 +1,18 @@
 import React from "react";
-import Jumbotron from "react-bootstrap/Jumbotron";
 import { Link } from "react-router-dom";
 import "./Home.scss";
 import Button from "react-bootstrap/Button";
 import { Routes } from "Routes";
 import { ProductGrid } from "customer-components/productgrid/ProductGrid";
+import featuredPicture from "../featured.jpg";
 
 function Home() {
   return (
     <div className="home-container">
-      <Jumbotron>
-        <div className="company-name">
-          <div className="h1">Minana Manila</div>
-        </div>
-      </Jumbotron>
+      <div className="featured-picture position-relative">
+        <img src={featuredPicture} alt="Featured" className="w-100 picture"/>
+        <div className="words h1">Minana Manila</div>
+      </div>
       <section id="items">
         <div className="categories d-flex">
           {["Men", "Women", "Children"].map((x) => (
@@ -22,7 +21,7 @@ function Home() {
             </Link>
           ))}
         </div>
-        <ProductGrid items={24} />
+        <ProductGrid maxRows={5} />
       </section>
       <section id="the-bread">
         <div className="row">
