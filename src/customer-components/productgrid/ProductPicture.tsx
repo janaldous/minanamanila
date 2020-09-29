@@ -41,10 +41,10 @@ export const ProductPicture: React.FC<ProductPictureProps> = (props) => {
         alt={`clothing ${props.id}`}
       />
     );
-  } else if (props.id >= 13 && props.id <= 24) {
+  } else if (props.id >= 13) {
     return (
       <img
-        src={pics[props.id-12]}
+        src={pics[(props.id % 12) + 1]}
         className={props.className}
         alt={`clothing ${props.id}`}
       />

@@ -131,7 +131,7 @@ html {
   }
 
   section {
-    padding: 60px;
+    padding: 20px;
     min-height: 95vh;
 
     display: flex;
@@ -261,4 +261,13 @@ html {
       color: $BLACK;
     }
   }
+}
+
+/** override bootstrap */
+.h1 {
+  font-family: Poppins-Black;
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
 }
