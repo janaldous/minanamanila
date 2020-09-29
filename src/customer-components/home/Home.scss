@@ -32,9 +32,14 @@ html {
 
   .words {
     position: absolute;
-    top: 300px;
+    top: 450px;
     left: 10%;
-    color: $GREY;
+    color: $BLACK;
+    font-size: 2rem;
+
+    .first-line {
+      font-family: Poppins-Black;
+    }
   }
 }
 
