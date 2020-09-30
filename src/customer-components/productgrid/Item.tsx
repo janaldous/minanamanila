@@ -9,8 +9,13 @@ export interface ItemProps {
   className: string;
 }
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
 export const Item: React.FC<ItemProps> = (props) => {
   const normalizedId = idConverter(props.id);
+  const price = getRandomInt(6) * 50 + 50;
   return (
     <div className={`product-item ${props.className}`}>
       <div className="pic-container position-relative">
@@ -19,7 +24,7 @@ export const Item: React.FC<ItemProps> = (props) => {
           <div className="pic-overlay position-absolute"></div>
         </Link>
       </div>
-      <div className="price font-weight-bold">{`₱${normalizedId * 100}`}</div>
+      <div className="price font-weight-bold">{`₱${price}`}</div>
     </div>
   );
 };
