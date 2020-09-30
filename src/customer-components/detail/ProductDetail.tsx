@@ -5,6 +5,8 @@ import { formatCurrency } from "utils/CurrencyFormatterUtil";
 import ReactMarkdown from "react-markdown";
 import { ProductGrid } from "customer-components/productgrid/ProductGrid";
 import { ProductPicture } from "customer-components/productgrid/ProductPicture";
+import QueryString from "query-string";
+import { useLocation } from "react-router-dom";
 
 export interface ProductDetailProps {
   username: string;
@@ -44,11 +46,15 @@ export const ProductDetail: React.FC<ProductDetailProps> = (props) => {
     alert("will contact seller");
   };
 
+  const location = useLocation();
+
+  const { id } = QueryString.parse(location.search.substring(1));
+
   return (
     <div className="product-detail">
       <div className="row">
         <div className="col-6 d-flex justify-content-center">
-          <ProductPicture id={1} className="w-100" />
+          <ProductPicture id={Number(id)} className="w-100" />
         </div>
         <div className="col-6 product-info">
           <div className="seller-container">

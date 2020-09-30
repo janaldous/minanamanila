@@ -13,7 +13,7 @@ export const MyMenuItem: React.FC<MenuItemProps> = (props) => {
 
   return (
     <div>
-      <Link to={props.url} className="link-decorations">
+      <Link to={props.url || "#"} className="link-decorations">
         <div className="h4 pt-3 cursor-pointer" onClick={toggleSubitems}>
           {props.title}
         </div>
@@ -21,7 +21,7 @@ export const MyMenuItem: React.FC<MenuItemProps> = (props) => {
       {openSubitems &&
         props.subItems &&
         props.subItems.map((subItem) => (
-          <Link to={subItem.url} className="link-decorations">
+          <Link to={subItem.url || "#"} key={subItem.title} className="link-decorations">
             <div className="pt-1 pl-2 cursor-pointer">{subItem.title}</div>
           </Link>
         ))}

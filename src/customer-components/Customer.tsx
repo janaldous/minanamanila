@@ -105,7 +105,7 @@ const Customer: React.FC<{}> = () => {
           <nav id="sidebar" className={`${!sideBarOpen ? "active" : ""}`}>
             <MySideBar />
           </nav>
-          <div>
+          <div className="w-100">
             <MyNavbar toggleSideBar={toggleSidebar} />
             <Router>
               <Switch>

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Routes } from "Routes";
 import "./Item.scss";
-import { ProductPicture } from "./ProductPicture";
+import { idConverter, ProductPicture } from "./ProductPicture";
 
 export interface ItemProps {
   id: number;
@@ -10,15 +10,16 @@ export interface ItemProps {
 }
 
 export const Item: React.FC<ItemProps> = (props) => {
+  const normalizedId = idConverter(props.id);
   return (
     <div className={`product-item ${props.className}`}>
-      <Link to={Routes.Detail}>
-        <div className="pic-container position-relative">
-          <ProductPicture id={props.id} className="pic position-absolute" />
+      <div className="pic-container position-relative">
+        <Link to={`${Routes.Detail}?id=${normalizedId}`}>
+          <ProductPicture id={normalizedId} className="pic position-absolute" />
           <div className="pic-overlay position-absolute"></div>
-        </div>
-      </Link>
-      <div className="price font-weight-bold">{`₱${props.id * 100}`}</div>
+        </Link>
+      </div>
+      <div className="price font-weight-bold">{`₱${normalizedId * 100}`}</div>
     </div>
   );
 };

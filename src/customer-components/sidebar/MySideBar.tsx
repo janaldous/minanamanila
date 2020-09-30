@@ -30,11 +30,11 @@ const sidebarItems: Array<MenuItemProps> = [
     url: Routes.SearchResult,
   },
   {
-    title: "Your Measurements (AI thing)",
+    title: "Your Measurements",
     url: Routes.SearchResult,
   },
   {
-    title: "The Tawad (Live Stream Bargain)",
+    title: "The Tawad",
     url: Routes.SearchResult,
   },
 ];
@@ -45,7 +45,7 @@ export const MySideBar: React.FC<{}> = (props) => {
       <div className="sidebar-header">
         <div>
           {sidebarItems.map((menuItem) => (
-            <MyMenuItem {...menuItem} />
+            <MyMenuItem key={menuItem.title} {...menuItem} />
           ))}
         </div>
       </div>

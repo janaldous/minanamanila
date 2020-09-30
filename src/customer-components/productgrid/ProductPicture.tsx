@@ -32,30 +32,22 @@ const pics = {
   12: pic12,
 };
 
-export const ProductPicture: React.FC<ProductPictureProps> = (props) => {
-  if (props.id >= 1 && props.id <= 12) {
-    return (
-      <img
-        src={pics[props.id]}
-        className={props.className}
-        alt={`clothing ${props.id}`}
-      />
-    );
-  } else if (props.id >= 13) {
-    return (
-      <img
-        src={pics[(props.id % 12) + 1]}
-        className={props.className}
-        alt={`clothing ${props.id}`}
-      />
-    );
+export const idConverter = (id: number): number => {
+  if (id >= 1 && id <= 12) {
+    return id;
+  } else if (id >= 13) {
+    return (id % 12) + 1;
   } else {
-    return (
-      <img
-        src={pic1}
-        className={props.className}
-        alt={`clothing ${props.id}`}
-      />
-    );
+    return 1;
   }
+};
+
+export const ProductPicture: React.FC<ProductPictureProps> = (props) => {
+  return (
+    <img
+      src={pics[props.id]}
+      className={props.className}
+      alt={`clothing ${props.id}`}
+    />
+  );
 };
