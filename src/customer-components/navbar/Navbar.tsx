@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 import logo from "../minanamanila_thin-removebg-preview.png";
 import SearchIcon from "@material-ui/icons/Search";
 
-export const MyNavbar: React.FC<{}> = () => {
+export const MyNavbar: React.FC<{ toggleSideBar: () => void }> = (props) => {
   const [show, setShow] = React.useState(false);
 
   const handleClose = () => setShow(false);
@@ -17,7 +17,7 @@ export const MyNavbar: React.FC<{}> = () => {
     <React.Fragment>
       <Navbar className="custom-navbar">
         <div className="flex-1-only">
-          <MenuIcon />
+          <MenuIcon onClick={props.toggleSideBar} className="cursor-pointer" />
         </div>
         <Navbar.Brand className="nav-brand" href="/">
           <img src={logo} alt="Logo" className="logo" />

@@ -1,22 +1,38 @@
 @import "../_color.scss";
 
 footer {
-    padding: 16px;
-    width: 100%;
-    background-color: $BLACK;
-    min-height: 50px;
-    display: flex;
-    justify-content: flex-end;
-    color: white;
-    display: flex;
-    align-items: center;
-  
-    .footer-item {
-      margin-right: 10px;
-  
-      &:last-of-type {
-        margin: 0;
-      }
+  padding: 16px;
+  width: 100%;
+  background-color: $BLACK;
+  min-height: 50px;
+  display: flex;
+  justify-content: flex-end;
+  color: white;
+  display: flex;
+  align-items: center;
+
+  .footer-item {
+    margin-right: 10px;
+
+    &:last-of-type {
+      margin: 0;
     }
   }
-  
+}
+
+#sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  min-height: 100vh;
+  transition: all 0.3s;
+
+  &.active {
+    margin-left: -250px;
+  }
+}
+
+.wrapper {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}

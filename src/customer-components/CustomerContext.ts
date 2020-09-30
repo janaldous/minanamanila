@@ -21,6 +21,8 @@ export interface CustomerContextStuff {
     operation: "increase" | "decrease"
   ) => void;
   onCartChange: (product: ProductRequiredDto, operation: QuantityOperation, quantity?: number) => void;
+  sideBarOpen: boolean;
+  toggleSidebar: () => void;
 }
 
 export const CustomerContext = React.createContext<CustomerContextStuff>({
@@ -31,4 +33,6 @@ export const CustomerContext = React.createContext<CustomerContextStuff>({
   },
   onAddToCart: (productId, operation) => console.log,
   onCartChange: () => console.log,
+  sideBarOpen: false,
+  toggleSidebar: () => console.log,
 });

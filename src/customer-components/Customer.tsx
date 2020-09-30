@@ -12,7 +12,7 @@ import { Routes } from "Routes";
 import { CustomerContext, CheckoutCart } from "./CustomerContext";
 import { ProductDetailWithApi } from "./detail/ProductDetail";
 import { SearchResults } from "./search/Search";
-import { NavbarPage } from "./withNavbar/NavbarPage";
+import { MyNavbar } from "./navbar/Navbar";
 
 const Customer: React.FC<{}> = () => {
   const [cart, setCart] = React.useState<CheckoutCart>({
@@ -86,6 +86,9 @@ const Customer: React.FC<{}> = () => {
     handleCartChange(product, operation);
   };
 
+  const [sideBarOpen, setSideBarOpen] = React.useState<boolean>(false);
+  const toggleSidebar = () => setSideBarOpen((oldValue) => !oldValue);
+
   return (
     <div className="app-container">
       <CustomerContext.Provider
@@ -93,41 +96,47 @@ const Customer: React.FC<{}> = () => {
           cart,
           onAddToCart: handleAddToCart,
           onCartChange: handleCartChange,
+          sideBarOpen,
+          toggleSidebar,
         }}
       >
-        <Router>
-          <Switch>
-            <Route path={Routes.Checkout}>
-              <Feature
-                name="online-order"
-                inactiveComponent={NotFoundComponent}
-                activeComponent={Order}
-              />
-            </Route>
-            <Route path={Routes.Products}>
-              <Feature
-                name="online-order"
-                inactiveComponent={NotFoundComponent}
-                activeComponent={ProductPage}
-              />
-            </Route>
-            <Route path={Routes.SearchResult}>
-              <NavbarPage>
-                <SearchResults />
-              </NavbarPage>
-            </Route>
-            <Route path={Routes.Detail}>
-              <NavbarPage>
-                <ProductDetailWithApi />
-              </NavbarPage>
-            </Route>
-            <Route path={Routes.Home}>
-              <NavbarPage>
-                <Home />
-              </NavbarPage>
-            </Route>
-          </Switch>
-        </Router>
+        <div className="wrapper">
+          <nav id="sidebar" className={`${!sideBarOpen ? "active" : ""}`}>
+            <div className="sidebar-header">
+              <h3>Bootstrap Sidebar</h3>
+            </div>
+          </nav>
+          <div>
+            <MyNavbar toggleSideBar={toggleSidebar} />
+            <Router>
+              <Switch>
+                <Route path={Routes.Checkout}>
+                  <Feature
+                    name="online-order"
+                    inactiveComponent={NotFoundComponent}
+                    activeComponent={Order}
+                  />
+                </Route>
+                <Route path={Routes.Products}>
+                  <Feature
+                    name="online-order"
+                    inactiveComponent={NotFoundComponent}
+                    activeComponent={ProductPage}
+                  />
+                </Route>
+                <Route path={Routes.SearchResult}>
+                  <SearchResults />
+                </Route>
+                <Route path={Routes.Detail}>
+                  <ProductDetailWithApi />
+                </Route>
+                <Route path={Routes.Home}>
+                  <Home />
+                </Route>
+              </Switch>
+            </Router>
+          </div>
+        </div>
       </CustomerContext.Provider>
       <footer>
         <div className="footer-item">Minana Manila</div>
