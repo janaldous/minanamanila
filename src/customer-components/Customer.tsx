@@ -13,6 +13,7 @@ import { CustomerContext, CheckoutCart } from "./CustomerContext";
 import { ProductDetailWithApi } from "./detail/ProductDetail";
 import { SearchResults } from "./search/Search";
 import { MyNavbar } from "./navbar/Navbar";
+import { MySideBar } from "./sidebar/MySideBar";
 
 const Customer: React.FC<{}> = () => {
   const [cart, setCart] = React.useState<CheckoutCart>({
@@ -102,9 +103,7 @@ const Customer: React.FC<{}> = () => {
       >
         <div className="wrapper">
           <nav id="sidebar" className={`${!sideBarOpen ? "active" : ""}`}>
-            <div className="sidebar-header">
-              <h3>Bootstrap Sidebar</h3>
-            </div>
+            <MySideBar />
           </nav>
           <div>
             <MyNavbar toggleSideBar={toggleSidebar} />
