@@ -24,15 +24,15 @@ const sidebarItems: Array<MenuItemProps> = [
   },
   {
     title: "Sustainable Fashion Responsibility Agreement",
-    url: Routes.SearchResult,
+    url: Routes.SFRAPage,
   },
   {
     title: "Your Measurements",
-    url: Routes.SearchResult,
+    url: Routes.YourMeasurements,
   },
   {
     title: "The Tawad",
-    url: Routes.SearchResult,
+    url: Routes.Tawad,
   },
 ];
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { TextPage } from "./textpage/TextPage";
+import { TextPage } from "./TextPage";
 
 export const WhoAreWePage: React.FC<{}> = () => {
   return (

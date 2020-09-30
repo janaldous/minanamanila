@@ -29,7 +29,7 @@ export const ProductDetailWithApi: React.FC<{}> = () => {
       productDescription="Size 30” waist. Inside leg 15”.<br>
       Full length 28”. Rise 14”.<br>
       <br>
-      Free standard UK shipping.<br>
+      Free shipping for minimum spend of ₱1000.<br>
       <br>
       90s 00s Y2K Vintage Ed Hardy Vintage Camo Cargo Shorts Ed Hardy Shorts Ed Hardy Camouflage"
       price={200}

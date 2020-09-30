@@ -14,7 +14,10 @@ import { ProductDetailWithApi } from "./detail/ProductDetail";
 import { SearchResults } from "./search/Search";
 import { MyNavbar } from "./navbar/Navbar";
 import { MySideBar } from "./sidebar/MySideBar";
-import { WhoAreWePage } from "./WhoAreWePage";
+import { WhoAreWePage } from "./textpage/WhoAreWePage";
+import { SFRAPage } from "./textpage/SFRAPage";
+import { TheTawadPage } from "./textpage/comingsoon/TheTawadPage";
+import { YourMeasurementsPage } from "./textpage/comingsoon/YourMeasurementsPage";
 
 const Customer: React.FC<{}> = () => {
   const [cart, setCart] = React.useState<CheckoutCart>({
@@ -123,6 +126,15 @@ const Customer: React.FC<{}> = () => {
                     inactiveComponent={NotFoundComponent}
                     activeComponent={ProductPage}
                   />
+                </Route>
+                <Route path={Routes.Tawad}>
+                  <TheTawadPage />
+                </Route>
+                <Route path={Routes.YourMeasurements}>
+                  <YourMeasurementsPage />
+                </Route>
+                <Route path={Routes.SFRAPage}>
+                  <SFRAPage />
                 </Route>
                 <Route path={Routes.AboutUs}>
                   <WhoAreWePage />

@@ -3,6 +3,9 @@ export enum Routes {
     Products = "/products",
     Detail = "/detail",
     AboutUs = "/aboutus",
+    SFRAPage = "/sfra",
     SearchResult = "/search",
-    Checkout = "/checkout"
+    Checkout = "/checkout",
+    Tawad = "/tawad",
+    YourMeasurements = "/yourmeasurements"
 }

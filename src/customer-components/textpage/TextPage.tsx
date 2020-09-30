@@ -26,6 +26,7 @@ export const TextPage: React.FC<TextPageProps> = (props) => {
           ))}
         </div>
       ))}
+      {props.children}
     </div>
   );
 };
