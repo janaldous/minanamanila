@@ -20,10 +20,7 @@ const sidebarItems: Array<MenuItemProps> = [
   },
   {
     title: "Who are we?",
-    subItems: [
-      { title: "Our Mission", url: Routes.SearchResult },
-      { title: "The Minana Community" },
-    ],
+    url: Routes.AboutUs,
   },
   {
     title: "Sustainable Fashion Responsibility Agreement",

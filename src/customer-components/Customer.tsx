@@ -14,6 +14,7 @@ import { ProductDetailWithApi } from "./detail/ProductDetail";
 import { SearchResults } from "./search/Search";
 import { MyNavbar } from "./navbar/Navbar";
 import { MySideBar } from "./sidebar/MySideBar";
+import { WhoAreWePage } from "./WhoAreWePage";
 
 const Customer: React.FC<{}> = () => {
   const [cart, setCart] = React.useState<CheckoutCart>({
@@ -122,6 +123,9 @@ const Customer: React.FC<{}> = () => {
                     inactiveComponent={NotFoundComponent}
                     activeComponent={ProductPage}
                   />
+                </Route>
+                <Route path={Routes.AboutUs}>
+                  <WhoAreWePage />
                 </Route>
                 <Route path={Routes.SearchResult}>
                   <SearchResults />
