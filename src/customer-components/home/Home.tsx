@@ -17,9 +17,9 @@ function Home() {
       </div>
       <section id="items">
         <div className="categories d-flex">
-          {["Men", "Women", "Children"].map((x) => (
-            <Link to={Routes.SearchResult} key={x}>
-              <div className="pr-3 pb-3 category">{x}</div>
+          {["Men", "Women", "Children"].map((category) => (
+            <Link to={`${Routes.SearchResult}?category=${category}`} key={category}>
+              <div className="pr-3 pb-3 category">{category}</div>
             </Link>
           ))}
         </div>

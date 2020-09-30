@@ -101,13 +101,13 @@ const Customer: React.FC<{}> = () => {
           toggleSidebar,
         }}
       >
-        <div className="wrapper">
-          <nav id="sidebar" className={`${!sideBarOpen ? "active" : ""}`}>
-            <MySideBar />
-          </nav>
-          <div className="w-100">
-            <MyNavbar toggleSideBar={toggleSidebar} />
-            <Router>
+        <Router>
+          <div className="wrapper">
+            <nav id="sidebar" className={`${!sideBarOpen ? "active" : ""}`}>
+              <MySideBar />
+            </nav>
+            <div className="w-100">
+              <MyNavbar toggleSideBar={toggleSidebar} />
               <Switch>
                 <Route path={Routes.Checkout}>
                   <Feature
@@ -133,9 +133,9 @@ const Customer: React.FC<{}> = () => {
                   <Home />
                 </Route>
               </Switch>
-            </Router>
+            </div>
           </div>
-        </div>
+        </Router>
       </CustomerContext.Provider>
       <footer>
         <div className="footer-item">Minana Manila</div>
