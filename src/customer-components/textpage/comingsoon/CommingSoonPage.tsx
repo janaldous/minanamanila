@@ -25,9 +25,6 @@ export const CommingSoonPage: React.FC<TextPageProps> = (props) => {
 
   return (
     <TextPage {...props}>
-      <div className="d-flex justify-content-center align-items-center coming-soon">
-        Coming Soon
-      </div>
       <div>
         {products?.map((product) => (
           <div key={product.id}>{product.name}</div>

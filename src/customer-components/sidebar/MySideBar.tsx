@@ -7,6 +7,7 @@ const sidebarItems: Array<MenuItemProps> = [
   {
     title: "What are you looking for?",
     subItems: [
+      { title: "Apple", url: `${Routes.SearchResult}?category=Apple` },
       { title: "Shirts", url: `${Routes.SearchResult}?category=Shirts` },
       { title: "Shorts", url: `${Routes.SearchResult}?category=Shorts` },
       { title: "Pants", url: `${Routes.SearchResult}?category=Pants` },

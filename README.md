@@ -45,3 +45,12 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+# How to generate typescript-axios swagger client
+See https://openapi-generator.tech/docs/installation/
+
+wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/4.3.1/openapi-generator-cli-4.3.1.jar -O openapi-generator-cli.jar
+
+```cmd
+java -jar openapi-generator-cli-5.0.0-beta.jar generate -i http://localhost:8080/v2/api-docs -g typescript-axios -o minanamanila/src/api/minanamanila-api-client
+```
