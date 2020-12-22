@@ -7,6 +7,7 @@ import { ProductGrid } from "customer-components/productgrid/ProductGrid";
 import { ProductPicture } from "customer-components/productgrid/ProductPicture";
 import QueryString from "query-string";
 import { useLocation } from "react-router-dom";
+import { Product, PublicControllerApiFactory } from "api/minanamanila-api-client/api";
 
 export interface ProductDetailProps {
   username: string;
@@ -21,18 +22,36 @@ export interface ProductDetailProps {
 }
 
 export const ProductDetailWithApi: React.FC<{}> = () => {
+
+  const [product, setProduct] = React.useState<Product>();
+  const location = useLocation();
+  const { id } = QueryString.parse(location.search.substring(1));
+
+  React.useEffect(() => {
+    const getProducts = async () => {
+      const config = {
+        basePath: "http://localhost:8080",
+      };
+
+      const publicApi = PublicControllerApiFactory(config);
+      const result = await publicApi.getProductUsingGET(Number(id));
+      setProduct(result.data);
+    };
+
+    getProducts();
+  }, []);
+  
+  if (!product) {
+    return <div></div>;
+  }
+
   return (
     <ProductDetail
       username="@janaldous"
       location="Manila, Philippines"
-      title="Vintage Ed Hardy camo cargo shorts"
-      productDescription="Size 30” waist. Inside leg 15”.<br>
-      Full length 28”. Rise 14”.<br>
-      <br>
-      Free shipping for minimum spend of ₱1000.<br>
-      <br>
-      90s 00s Y2K Vintage Ed Hardy Vintage Camo Cargo Shorts Ed Hardy Shorts Ed Hardy Camouflage"
-      price={200}
+      title={product.name || ""}
+      productDescription={product.description || ""}
+      price={product.unitPrice ? Number(product.unitPrice) : -1}
       size={"30in"}
       condition={"Used - Like New"}
       itemsSold={807}
