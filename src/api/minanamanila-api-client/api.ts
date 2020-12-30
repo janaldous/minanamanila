@@ -473,6 +473,122 @@ export enum OrderUpdateDtoStatusEnum {
 /**
  * 
  * @export
+ * @interface PageProduct
+ */
+export interface PageProduct {
+    /**
+     * 
+     * @type {Array<Product>}
+     * @memberof PageProduct
+     */
+    content?: Array<Product>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageProduct
+     */
+    empty?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageProduct
+     */
+    first?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageProduct
+     */
+    last?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageProduct
+     */
+    number?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageProduct
+     */
+    numberOfElements?: number;
+    /**
+     * 
+     * @type {Pageable}
+     * @memberof PageProduct
+     */
+    pageable?: Pageable;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageProduct
+     */
+    size?: number;
+    /**
+     * 
+     * @type {Sort}
+     * @memberof PageProduct
+     */
+    sort?: Sort;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageProduct
+     */
+    totalElements?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageProduct
+     */
+    totalPages?: number;
+}
+/**
+ * 
+ * @export
+ * @interface Pageable
+ */
+export interface Pageable {
+    /**
+     * 
+     * @type {number}
+     * @memberof Pageable
+     */
+    offset?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Pageable
+     */
+    pageNumber?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Pageable
+     */
+    pageSize?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Pageable
+     */
+    paged?: boolean;
+    /**
+     * 
+     * @type {Sort}
+     * @memberof Pageable
+     */
+    sort?: Sort;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Pageable
+     */
+    unpaged?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface Product
  */
 export interface Product {
@@ -610,6 +726,31 @@ export interface ProductSimpleDto {
      * @memberof ProductSimpleDto
      */
     unitPrice?: number;
+}
+/**
+ * 
+ * @export
+ * @interface Sort
+ */
+export interface Sort {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Sort
+     */
+    empty?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Sort
+     */
+    sorted?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Sort
+     */
+    unsorted?: boolean;
 }
 /**
  * 
@@ -1584,7 +1725,7 @@ export const PublicControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProductsUsingGET(page: number, size: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductSimpleDto>>> {
+        async getProductsUsingGET(page: number, size: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageProduct>> {
             const localVarAxiosArgs = await PublicControllerApiAxiosParamCreator(configuration).getProductsUsingGET(page, size, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -1663,7 +1804,7 @@ export const PublicControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProductsUsingGET(page: number, size: number, options?: any): AxiosPromise<Array<ProductSimpleDto>> {
+        getProductsUsingGET(page: number, size: number, options?: any): AxiosPromise<PageProduct> {
             return PublicControllerApiFp(configuration).getProductsUsingGET(page, size, options).then((request) => request(axios, basePath));
         },
         /**

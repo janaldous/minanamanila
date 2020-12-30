@@ -45,7 +45,7 @@ export const idConverter = (id: number): number => {
 export const ProductPicture: React.FC<ProductPictureProps> = (props) => {
   return (
     <img
-      src={pics[props.id]}
+      src={pics[idConverter(props.id)]}
       className={props.className}
       alt={`clothing ${props.id}`}
     />

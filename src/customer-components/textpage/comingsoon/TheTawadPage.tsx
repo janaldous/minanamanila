@@ -1,6 +1,6 @@
 import React from "react";
-import { CommingSoonPage } from "./CommingSoonPage";
+import { ComingSoonPage } from "./ComingSoonPage";
 
 export const TheTawadPage: React.FC<{}> = () => {
-  return <CommingSoonPage title="The Tawad" sections={[]} />;
+  return <ComingSoonPage title="The Tawad" sections={[]} />;
 };

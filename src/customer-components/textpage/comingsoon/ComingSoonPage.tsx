@@ -4,20 +4,16 @@ import {
   Product,
   PublicControllerApiFactory,
 } from "../../../api/minanamanila-api-client/api";
+import { config } from "axiosConfig";
 
-export const CommingSoonPage: React.FC<TextPageProps> = (props) => {
+export const ComingSoonPage: React.FC<TextPageProps> = (props) => {
   const [products, setProducts] = React.useState<Array<Product>>();
 
   React.useEffect(() => {
     const getProducts = async () => {
-      const config = {
-        basePath: "http://localhost:8080",
-      };
-
       const publicApi = PublicControllerApiFactory(config);
       const result = await publicApi.getProductsUsingGET(0, 10);
-      console.log(result.data);
-      setProducts(result.data);
+      setProducts(result.data.content);
     };
 
     getProducts();

@@ -1,14 +1,14 @@
 import { Item } from "./Item";
 import React from "react";
-import { Product, ProductSimpleDto } from "api/minanamanila-api-client/api";
+import { Product } from "api/minanamanila-api-client/api";
 
 export interface ProductGridProps2 {
-  products: Array<ProductSimpleDto>;
+  products: Array<Product>;
 }
 
 export const ProductGrid2: React.FC<ProductGridProps2> = (props) => {
   const noOfCols = 6;
-  var arrayOfArrays: Array<Array<ProductSimpleDto>> = [];
+  var arrayOfArrays: Array<Array<Product>> = [];
   for (var i = 0; i < props.products.length; i += noOfCols) {
     arrayOfArrays.push(props.products.slice(i, i + noOfCols));
   }
@@ -23,7 +23,7 @@ export const ProductGrid2: React.FC<ProductGridProps2> = (props) => {
               className="col"
               id={Number(column.id)}
               price={column.unitPrice}
-              imageURL={column.imageURL ? "http://localhost:8080/api/products/photo/" + column.id : undefined}
+              imageURL={column.photo ? "http://localhost:8080/api/products/photo/" + column.id : undefined}
             />
           ))}
         </div>
