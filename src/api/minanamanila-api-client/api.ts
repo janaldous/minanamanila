@@ -591,6 +591,12 @@ export interface ProductSimpleDto {
      * @type {string}
      * @memberof ProductSimpleDto
      */
+    imageURL?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductSimpleDto
+     */
     name?: string;
     /**
      * 
@@ -1344,6 +1350,45 @@ export const PublicControllerApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
+         * @summary Get product suggestions for a particular product
+         * @param {number} id id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProductSuggestionsUsingGET: async (id: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling getProductSuggestionsUsingGET.');
+            }
+            const localVarPath = `/api/products/suggestions`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary getProduct
          * @param {number} id id
          * @param {*} [options] Override http request option.
@@ -1505,6 +1550,20 @@ export const PublicControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get product suggestions for a particular product
+         * @param {number} id id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getProductSuggestionsUsingGET(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductSimpleDto>>> {
+            const localVarAxiosArgs = await PublicControllerApiAxiosParamCreator(configuration).getProductSuggestionsUsingGET(id, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @summary getProduct
          * @param {number} id id
          * @param {*} [options] Override http request option.
@@ -1525,7 +1584,7 @@ export const PublicControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProductsUsingGET(page: number, size: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Product>>> {
+        async getProductsUsingGET(page: number, size: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductSimpleDto>>> {
             const localVarAxiosArgs = await PublicControllerApiAxiosParamCreator(configuration).getProductsUsingGET(page, size, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -1578,6 +1637,16 @@ export const PublicControllerApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
+         * @summary Get product suggestions for a particular product
+         * @param {number} id id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProductSuggestionsUsingGET(id: number, options?: any): AxiosPromise<Array<ProductSimpleDto>> {
+            return PublicControllerApiFp(configuration).getProductSuggestionsUsingGET(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary getProduct
          * @param {number} id id
          * @param {*} [options] Override http request option.
@@ -1594,7 +1663,7 @@ export const PublicControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProductsUsingGET(page: number, size: number, options?: any): AxiosPromise<Array<Product>> {
+        getProductsUsingGET(page: number, size: number, options?: any): AxiosPromise<Array<ProductSimpleDto>> {
             return PublicControllerApiFp(configuration).getProductsUsingGET(page, size, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1640,6 +1709,18 @@ export class PublicControllerApi extends BaseAPI {
      */
     public getProductPhotoUsingGET(id: number, options?: any) {
         return PublicControllerApiFp(this.configuration).getProductPhotoUsingGET(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get product suggestions for a particular product
+     * @param {number} id id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublicControllerApi
+     */
+    public getProductSuggestionsUsingGET(id: number, options?: any) {
+        return PublicControllerApiFp(this.configuration).getProductSuggestionsUsingGET(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

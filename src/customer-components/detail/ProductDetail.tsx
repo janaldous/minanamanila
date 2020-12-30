@@ -3,7 +3,6 @@ import "./ProductDetail.scss";
 import Button from "react-bootstrap/Button";
 import { formatCurrency } from "utils/CurrencyFormatterUtil";
 import ReactMarkdown from "react-markdown";
-import { ProductGrid } from "customer-components/productgrid/ProductGrid";
 import { ProductPicture } from "customer-components/productgrid/ProductPicture";
 import QueryString from "query-string";
 import { useLocation } from "react-router-dom";
@@ -11,11 +10,13 @@ import {
   Product,
   PublicControllerApiFactory,
 } from "api/minanamanila-api-client/api";
+import { ProductGridWithApi } from "customer-components/productgrid/ProductGridWithApi";
 
 export interface ProductDetailProps {
   username: string;
   location: string;
   productDescription: string;
+  oldPrice?: number;
   price: number;
   size: string;
   title: string;
@@ -70,6 +71,7 @@ export const ProductDetailWithApi: React.FC<{}> = () => {
       location="Manila, Philippines"
       title={product.name || ""}
       productDescription={product.description || ""}
+      oldPrice={product.srp}
       price={product.unitPrice ? Number(product.unitPrice) : -1}
       size={"30in"}
       condition={"Used - Like New"}
@@ -94,7 +96,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = (props) => {
       <div className="row">
         <div className="col-6 d-flex justify-content-center">
           {props.imageURL ? (
-            <img src={props.imageURL} />
+            <img src={props.imageURL} className="w-100 product-image"/>
           ) : (
             <ProductPicture id={Number(id)} className="w-100" />
           )}
@@ -119,6 +121,9 @@ export const ProductDetail: React.FC<ProductDetailProps> = (props) => {
           <div className="product-description-container mt-3">
             <div className="font-weight-bold description-title">
               {props.title}
+            </div>
+            <div className="description-old-price">
+              {props.oldPrice && formatCurrency(props.oldPrice)}
             </div>
             <div className="description-price">
               {formatCurrency(props.price)}
@@ -145,7 +150,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = (props) => {
       </div>
       <div className="d-flex flex-column mt-3 mb-3 similar-items">
         <div className="h1">Similar items</div>
-        <ProductGrid maxRows={2} />
+        <ProductGridWithApi id={Number(id)}/>
       </div>
     </div>
   );
