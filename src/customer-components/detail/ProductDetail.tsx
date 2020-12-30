@@ -7,7 +7,10 @@ import { ProductGrid } from "customer-components/productgrid/ProductGrid";
 import { ProductPicture } from "customer-components/productgrid/ProductPicture";
 import QueryString from "query-string";
 import { useLocation } from "react-router-dom";
-import { Product, PublicControllerApiFactory } from "api/minanamanila-api-client/api";
+import {
+  Product,
+  PublicControllerApiFactory,
+} from "api/minanamanila-api-client/api";
 
 export interface ProductDetailProps {
   username: string;
@@ -19,11 +22,12 @@ export interface ProductDetailProps {
   condition: string;
   itemsSold: number;
   dateListed: string;
+  imageURL?: string;
 }
 
 export const ProductDetailWithApi: React.FC<{}> = () => {
-
   const [product, setProduct] = React.useState<Product>();
+  const [imageURL, setImageURL] = React.useState<string>();
   const location = useLocation();
   const { id } = QueryString.parse(location.search.substring(1));
 
@@ -38,11 +42,26 @@ export const ProductDetailWithApi: React.FC<{}> = () => {
       setProduct(result.data);
     };
 
+    const getProductImage = async () => {
+      const config = {
+        basePath: "http://localhost:8080",
+      };
+
+      const publicApi = PublicControllerApiFactory(config);
+      const result = await publicApi.getProductPhotoUsingGET(Number(id));
+      if (result.data) {
+        setImageURL("http://localhost:8080/api/products/photo/" + id);
+      } else {
+        setImageURL("");
+      }
+    };
+
+    getProductImage();
     getProducts();
-  }, []);
-  
+  }, [id]);
+
   if (!product) {
-    return <div></div>;
+    return <div>Loading...</div>;
   }
 
   return (
@@ -56,6 +75,7 @@ export const ProductDetailWithApi: React.FC<{}> = () => {
       condition={"Used - Like New"}
       itemsSold={807}
       dateListed={"8h ago"}
+      imageURL={imageURL}
     />
   );
 };
@@ -73,7 +93,11 @@ export const ProductDetail: React.FC<ProductDetailProps> = (props) => {
     <div className="product-detail">
       <div className="row">
         <div className="col-6 d-flex justify-content-center">
-          <ProductPicture id={Number(id)} className="w-100" />
+          {props.imageURL ? (
+            <img src={props.imageURL} />
+          ) : (
+            <ProductPicture id={Number(id)} className="w-100" />
+          )}
         </div>
         <div className="col-6 product-info">
           <div className="seller-container">
