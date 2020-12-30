@@ -2,25 +2,21 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import "./Apple.scss";
 import QueryString from "query-string";
-import { Product, PublicControllerApiFactory } from "api/minanamanila-api-client/api";
+import { Product, ProductSimpleDto, PublicControllerApiFactory } from "api/minanamanila-api-client/api";
 import { ProductGrid2 } from "customer-components/productgrid/ProductGrid2";
+import { config } from "axiosConfig";
 
 export const Apple: React.FC<{}> = () => {
 
   const location = useLocation();
   const { category } = QueryString.parse(location.search.substring(1));
 
-  const [products, setProducts] = React.useState<Array<Product>>([]);
+  const [products, setProducts] = React.useState<Array<ProductSimpleDto>>([]);
 
   React.useEffect(() => {
     const getProducts = async () => {
-      const config = {
-        basePath: "http://localhost:8080",
-      };
-
       const publicApi = PublicControllerApiFactory(config);
-      const result = await publicApi.getProductsUsingGET(0, 10);
-      console.log(result.data);
+      const result = await publicApi.getProductsUsingGET(2, 24);
       setProducts(result.data);
     };
 

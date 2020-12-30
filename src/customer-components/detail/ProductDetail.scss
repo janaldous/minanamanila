@@ -1,11 +1,14 @@
 @import "../../color.scss";
 
 .product-detail {
-  .product-pic {
-    background-color: $BLUE;
-    height: 300px;
-    width: 300px;
+  .product-image {
+    height: 100%;
+    width: 100%;
+    object-fit: scale-down;
+    cursor: pointer;
+    top: 0;
   }
+
   .product-info {
     padding: 20px;
 
@@ -39,6 +42,12 @@
     .description-title {
       font-family: Poppins-Black;
       font-size: 1.25rem;
+    }
+
+    .description-old-price {
+      color: lightgrey;
+      text-decoration: line-through;
+      font-size: 1.1rem;
     }
 
     .description-price {
