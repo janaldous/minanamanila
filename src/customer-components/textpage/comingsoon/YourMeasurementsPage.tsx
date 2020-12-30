@@ -1,6 +1,6 @@
 import React from "react";
-import { CommingSoonPage } from "./CommingSoonPage";
+import { ComingSoonPage } from "./ComingSoonPage";
 
 export const YourMeasurementsPage: React.FC<{}> = () => {
-  return <CommingSoonPage title="Your Measurements" sections={[]} />;
+  return <ComingSoonPage title="Your Measurements" sections={[]} />;
 };

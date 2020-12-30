@@ -11,6 +11,7 @@ import {
   PublicControllerApiFactory,
 } from "api/minanamanila-api-client/api";
 import { ProductGridWithApi } from "customer-components/productgrid/ProductGridWithApi";
+import { config } from "axiosConfig";
 
 export interface ProductDetailProps {
   username: string;
@@ -34,20 +35,12 @@ export const ProductDetailWithApi: React.FC<{}> = () => {
 
   React.useEffect(() => {
     const getProducts = async () => {
-      const config = {
-        basePath: "http://localhost:8080",
-      };
-
       const publicApi = PublicControllerApiFactory(config);
       const result = await publicApi.getProductUsingGET(Number(id));
       setProduct(result.data);
     };
 
     const getProductImage = async () => {
-      const config = {
-        basePath: "http://localhost:8080",
-      };
-
       const publicApi = PublicControllerApiFactory(config);
       const result = await publicApi.getProductPhotoUsingGET(Number(id));
       if (result.data) {

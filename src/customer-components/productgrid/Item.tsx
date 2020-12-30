@@ -23,7 +23,7 @@ export const Item: React.FC<ItemProps> = (props) => {
   return (
     <div className={`product-item ${props.className}`}>
       <div className="pic-container position-relative">
-        <Link to={`${Routes.Detail}?id=${normalizedId}`}>
+        <Link to={`${Routes.Detail}?id=${props.id}`}>
           {props.imageURL ? (
             <img src={props.imageURL} className="w-100" />
           ) : (
