@@ -23,7 +23,7 @@ export const ProductGrid2: React.FC<ProductGridProps2> = (props) => {
               className="col"
               id={Number(column.id)}
               price={column.unitPrice}
-              imageURL={column.photo ? "http://localhost:8080/api/products/photo/" + column.id : undefined}
+              imageURL={column.pictureUrl ? "http://localhost:8080/static/" + column.pictureUrl : undefined}
             />
           ))}
         </div>

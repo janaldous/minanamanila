@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
-  ProductSimpleDto,
+  Product,
   PublicControllerApiFactory,
 } from "api/minanamanila-api-client/api";
 import { config } from "axiosConfig";
@@ -13,13 +13,13 @@ export interface ProductGridWithApiProps {
 export const ProductGridWithApi: React.FC<ProductGridWithApiProps> = (
   props
 ) => {
-  const [products, setProducts] = useState<Array<ProductSimpleDto>>([]);
+  const [products, setProducts] = useState<Array<Product>>([]);
 
   useEffect(() => {
     const getSuggestedProducts = async () => {
       const publicApi = PublicControllerApiFactory(config);
       const result = await publicApi.getProductSuggestionsUsingGET(props.id);
-      setProducts(result.data);
+      setProducts(result.data.content || []);
     };
 
     getSuggestedProducts();

@@ -25,11 +25,11 @@ export interface ProductDetailProps {
   itemsSold: number;
   dateListed: string;
   imageURL?: string;
+  variations?: Array<any>;
 }
 
 export const ProductDetailWithApi: React.FC<{}> = () => {
   const [product, setProduct] = React.useState<Product>();
-  const [imageURL, setImageURL] = React.useState<string>();
   const location = useLocation();
   const { id } = QueryString.parse(location.search.substring(1));
 
@@ -40,17 +40,6 @@ export const ProductDetailWithApi: React.FC<{}> = () => {
       setProduct(result.data);
     };
 
-    const getProductImage = async () => {
-      const publicApi = PublicControllerApiFactory(config);
-      const result = await publicApi.getProductPhotoUsingGET(Number(id));
-      if (result.data) {
-        setImageURL("http://localhost:8080/api/products/photo/" + id);
-      } else {
-        setImageURL("");
-      }
-    };
-
-    getProductImage();
     getProducts();
   }, [id]);
 
@@ -64,13 +53,14 @@ export const ProductDetailWithApi: React.FC<{}> = () => {
       location="Manila, Philippines"
       title={product.name || ""}
       productDescription={product.description || ""}
+      variations={product.colors}
       oldPrice={product.srp}
       price={product.unitPrice ? Number(product.unitPrice) : -1}
       size={"30in"}
       condition={"Used - Like New"}
       itemsSold={807}
       dateListed={"8h ago"}
-      imageURL={imageURL}
+      imageURL={product.pictureUrl ? "http://localhost:8080/static/" + product.pictureUrl : undefined}
     />
   );
 };
@@ -89,7 +79,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = (props) => {
       <div className="row">
         <div className="col-6 d-flex justify-content-center">
           {props.imageURL ? (
-            <img src={props.imageURL} className="w-100 product-image"/>
+            <img src={props.imageURL} className="w-100 product-image" />
           ) : (
             <ProductPicture id={Number(id)} className="w-100" />
           )}
@@ -127,6 +117,12 @@ export const ProductDetail: React.FC<ProductDetailProps> = (props) => {
                 escapeHtml={false}
               />
             </div>
+            <div className="mt-3">
+              <span className="mr-1">Variations: </span>
+              {props.variations?.map((variation, index) => (
+                <div key={index} className="badge badge-secondary mr-1">{variation}</div>
+              ))}
+            </div>
             <div className="mt-3">{props.size}</div>
             <div className="mt-3">{props.condition}</div>
           </div>
@@ -143,7 +139,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = (props) => {
       </div>
       <div className="d-flex flex-column mt-3 mb-3 similar-items">
         <div className="h1">Similar items</div>
-        <ProductGridWithApi id={Number(id)}/>
+        <ProductGridWithApi id={Number(id)} />
       </div>
     </div>
   );

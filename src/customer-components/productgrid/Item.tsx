@@ -35,7 +35,7 @@ export const Item: React.FC<ItemProps> = (props) => {
           <div className="pic-overlay position-absolute"></div>
         </Link>
       </div>
-      <div className="price font-weight-bold">{`${formatCurrency(price)}`}</div>
+      <div className="price font-weight-bold text-center">{`${formatCurrency(price)}`}</div>
     </div>
   );
 };
