@@ -133,6 +133,25 @@ export interface AddressDto {
 /**
  * 
  * @export
+ * @interface Category
+ */
+export interface Category {
+    /**
+     * 
+     * @type {number}
+     * @memberof Category
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Category
+     */
+    name?: string;
+}
+/**
+ * 
+ * @export
  * @interface DeliveryDate
  */
 export interface DeliveryDate {
@@ -600,16 +619,22 @@ export interface Product {
     brand?: string;
     /**
      * 
-     * @type {Array<object>}
+     * @type {Array<Category>}
      * @memberof Product
      */
-    categories?: Array<object>;
+    categories?: Array<Category>;
     /**
      * 
      * @type {string}
      * @memberof Product
      */
     code?: string;
+    /**
+     * 
+     * @type {Array<ProductColor>}
+     * @memberof Product
+     */
+    colors?: Array<ProductColor>;
     /**
      * 
      * @type {string}
@@ -633,7 +658,7 @@ export interface Product {
      * @type {string}
      * @memberof Product
      */
-    photo?: string;
+    pictureUrl?: string;
     /**
      * 
      * @type {number}
@@ -646,6 +671,31 @@ export interface Product {
      * @memberof Product
      */
     unitPrice?: number;
+}
+/**
+ * 
+ * @export
+ * @interface ProductColor
+ */
+export interface ProductColor {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductColor
+     */
+    color?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductColor
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductColor
+     */
+    productCode?: string;
 }
 /**
  * 
@@ -665,67 +715,6 @@ export interface ProductDto {
      * @memberof ProductDto
      */
     quantity?: number;
-}
-/**
- * 
- * @export
- * @interface ProductSimpleDto
- */
-export interface ProductSimpleDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductSimpleDto
-     */
-    brand?: string;
-    /**
-     * 
-     * @type {Array<object>}
-     * @memberof ProductSimpleDto
-     */
-    categories?: Array<object>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductSimpleDto
-     */
-    code?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductSimpleDto
-     */
-    description?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProductSimpleDto
-     */
-    id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductSimpleDto
-     */
-    imageURL?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductSimpleDto
-     */
-    name?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProductSimpleDto
-     */
-    srp?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProductSimpleDto
-     */
-    unitPrice?: number;
 }
 /**
  * 
@@ -1455,42 +1444,6 @@ export const PublicControllerApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @summary getProductPhoto
-         * @param {number} id id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getProductPhotoUsingGET: async (id: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling getProductPhotoUsingGET.');
-            }
-            const localVarPath = `/api/products/photo/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Get product suggestions for a particular product
          * @param {number} id id
          * @param {*} [options] Override http request option.
@@ -1677,26 +1630,12 @@ export const PublicControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary getProductPhoto
-         * @param {number} id id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getProductPhotoUsingGET(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await PublicControllerApiAxiosParamCreator(configuration).getProductPhotoUsingGET(id, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
          * @summary Get product suggestions for a particular product
          * @param {number} id id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProductSuggestionsUsingGET(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductSimpleDto>>> {
+        async getProductSuggestionsUsingGET(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageProduct>> {
             const localVarAxiosArgs = await PublicControllerApiAxiosParamCreator(configuration).getProductSuggestionsUsingGET(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -1710,7 +1649,7 @@ export const PublicControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProductUsingGET(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductSimpleDto>> {
+        async getProductUsingGET(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Product>> {
             const localVarAxiosArgs = await PublicControllerApiAxiosParamCreator(configuration).getProductUsingGET(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -1768,22 +1707,12 @@ export const PublicControllerApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary getProductPhoto
-         * @param {number} id id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getProductPhotoUsingGET(id: number, options?: any): AxiosPromise<string> {
-            return PublicControllerApiFp(configuration).getProductPhotoUsingGET(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Get product suggestions for a particular product
          * @param {number} id id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProductSuggestionsUsingGET(id: number, options?: any): AxiosPromise<Array<ProductSimpleDto>> {
+        getProductSuggestionsUsingGET(id: number, options?: any): AxiosPromise<PageProduct> {
             return PublicControllerApiFp(configuration).getProductSuggestionsUsingGET(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1793,7 +1722,7 @@ export const PublicControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProductUsingGET(id: number, options?: any): AxiosPromise<ProductSimpleDto> {
+        getProductUsingGET(id: number, options?: any): AxiosPromise<Product> {
             return PublicControllerApiFp(configuration).getProductUsingGET(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1838,18 +1767,6 @@ export class PublicControllerApi extends BaseAPI {
      */
     public getDeliveryDatesUsingGET(page: number, size: number, options?: any) {
         return PublicControllerApiFp(this.configuration).getDeliveryDatesUsingGET(page, size, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary getProductPhoto
-     * @param {number} id id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PublicControllerApi
-     */
-    public getProductPhotoUsingGET(id: number, options?: any) {
-        return PublicControllerApiFp(this.configuration).getProductPhotoUsingGET(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
