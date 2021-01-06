@@ -60,7 +60,7 @@ export const ProductDetailWithApi: React.FC<{}> = () => {
       condition={"Used - Like New"}
       itemsSold={807}
       dateListed={"8h ago"}
-      imageURL={product.pictureUrl ? "http://localhost:8080/static/" + product.pictureUrl : undefined}
+      imageURL={product.pictureUrl ? `${config.basePath}/static/` + product.pictureUrl : undefined}
     />
   );
 };

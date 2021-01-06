@@ -1,6 +1,7 @@
 import { Item } from "./Item";
 import React from "react";
 import { Product } from "api/minanamanila-api-client/api";
+import { config } from "axiosConfig";
 
 export interface ProductGridProps2 {
   products: Array<Product>;
@@ -23,7 +24,7 @@ export const ProductGrid2: React.FC<ProductGridProps2> = (props) => {
               className="col"
               id={Number(column.id)}
               price={column.unitPrice}
-              imageURL={column.pictureUrl ? "http://localhost:8080/static/" + column.pictureUrl : undefined}
+              imageURL={column.pictureUrl ? `${config.basePath}/static/` + column.pictureUrl : undefined}
             />
           ))}
         </div>

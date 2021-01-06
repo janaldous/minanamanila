@@ -11,7 +11,6 @@ import { ProductPage, ProductRequiredDto } from "./product/ProductPage";
 import { Routes } from "Routes";
 import { CustomerContext, CheckoutCart } from "./CustomerContext";
 import { ProductDetailWithApi } from "./detail/ProductDetail";
-import { SearchResults } from "./search/Search";
 import { MyNavbar } from "./navbar/Navbar";
 import { MySideBar } from "./sidebar/MySideBar";
 import { WhoAreWePage } from "./textpage/WhoAreWePage";
