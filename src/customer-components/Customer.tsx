@@ -18,6 +18,7 @@ import { SFRAPage } from "./textpage/SFRAPage";
 import { TheTawadPage } from "./textpage/comingsoon/TheTawadPage";
 import { YourMeasurementsPage } from "./textpage/comingsoon/YourMeasurementsPage";
 import { Apple } from "./apple/Apple";
+import CartContextProvider from "context/CartContext";
 
 const Customer: React.FC<{}> = () => {
   const [cart, setCart] = React.useState<CheckoutCart>({
@@ -105,53 +106,55 @@ const Customer: React.FC<{}> = () => {
           toggleSidebar,
         }}
       >
-        <Router>
-          <div className="wrapper">
-            <nav id="sidebar" className={`${!sideBarOpen ? "active" : ""}`}>
-              <MySideBar />
-            </nav>
-            <div className="w-100">
-              <MyNavbar toggleSideBar={toggleSidebar} />
-              <Switch>
-                <Route path={Routes.Checkout}>
-                  <Feature
-                    name="online-order"
-                    inactiveComponent={NotFoundComponent}
-                    activeComponent={Order}
-                  />
-                </Route>
-                <Route path={Routes.Products}>
-                  <Feature
-                    name="online-order"
-                    inactiveComponent={NotFoundComponent}
-                    activeComponent={ProductPage}
-                  />
-                </Route>
-                <Route path={Routes.Tawad}>
-                  <TheTawadPage />
-                </Route>
-                <Route path={Routes.YourMeasurements}>
-                  <YourMeasurementsPage />
-                </Route>
-                <Route path={Routes.SFRAPage}>
-                  <SFRAPage />
-                </Route>
-                <Route path={Routes.AboutUs}>
-                  <WhoAreWePage />
-                </Route>
-                <Route path={Routes.SearchResult}>
-                  <Apple />
-                </Route>
-                <Route path={Routes.Detail}>
-                  <ProductDetailWithApi />
-                </Route>
-                <Route path={Routes.Home}>
-                  <Home />
-                </Route>
-              </Switch>
+        <CartContextProvider>
+          <Router>
+            <div className="wrapper">
+              <nav id="sidebar" className={`${!sideBarOpen ? "active" : ""}`}>
+                <MySideBar />
+              </nav>
+              <div className="w-100">
+                <MyNavbar toggleSideBar={toggleSidebar} />
+                <Switch>
+                  <Route path={Routes.Checkout}>
+                    <Feature
+                      name="online-order"
+                      inactiveComponent={NotFoundComponent}
+                      activeComponent={Order}
+                    />
+                  </Route>
+                  <Route path={Routes.Products}>
+                    <Feature
+                      name="online-order"
+                      inactiveComponent={NotFoundComponent}
+                      activeComponent={ProductPage}
+                    />
+                  </Route>
+                  <Route path={Routes.Tawad}>
+                    <TheTawadPage />
+                  </Route>
+                  <Route path={Routes.YourMeasurements}>
+                    <YourMeasurementsPage />
+                  </Route>
+                  <Route path={Routes.SFRAPage}>
+                    <SFRAPage />
+                  </Route>
+                  <Route path={Routes.AboutUs}>
+                    <WhoAreWePage />
+                  </Route>
+                  <Route path={Routes.SearchResult}>
+                    <Apple />
+                  </Route>
+                  <Route path={Routes.Detail}>
+                    <ProductDetailWithApi />
+                  </Route>
+                  <Route path={Routes.Home}>
+                    <Home />
+                  </Route>
+                </Switch>
+              </div>
             </div>
-          </div>
-        </Router>
+          </Router>
+        </CartContextProvider>
       </CustomerContext.Provider>
       <footer>
         <div className="footer-item">Minana Manila</div>

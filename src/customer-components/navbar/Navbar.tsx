@@ -6,12 +6,15 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import logo from "../minanamanila_thin-removebg-preview.png";
 import SearchIcon from "@material-ui/icons/Search";
+import { CartContext } from "context/CartContext";
 
 export const MyNavbar: React.FC<{ toggleSideBar: () => void }> = (props) => {
   const [show, setShow] = React.useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const { cart } = React.useContext(CartContext);
 
   return (
     <React.Fragment>
@@ -32,6 +35,9 @@ export const MyNavbar: React.FC<{ toggleSideBar: () => void }> = (props) => {
             </div>
             <div className="font-weight-bold pr-3">
               <SearchIcon />
+            </div>
+            <div className="font-weight-bold pr-3" onClick={handleShow}>
+              Cart : {cart.itemCount}
             </div>
           </div>
         </div>

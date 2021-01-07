@@ -7,7 +7,6 @@ import {
   PublicControllerApiFactory,
 } from "api/minanamanila-api-client/api";
 import { ProductGrid2 } from "customer-components/productgrid/ProductGrid2";
-import { config } from "axiosConfig";
 import Pagination from "@material-ui/lab/Pagination";
 
 export const Apple: React.FC<{}> = () => {
@@ -22,7 +21,7 @@ export const Apple: React.FC<{}> = () => {
   }, []);
 
   const getProducts = async (page = 0) => {
-    const publicApi = PublicControllerApiFactory(config);
+    const publicApi = PublicControllerApiFactory();
     const result = await publicApi.getProductsUsingGET(page, 24);
     setProductPage(result.data);
     setCurrentPage(result.data.pageable?.pageNumber);
@@ -44,7 +43,11 @@ export const Apple: React.FC<{}> = () => {
         </div>
         <div className="col-9 d-flex align-items-center flex-column">
           <ProductGrid2 products={productPage?.content || []} />
-          <Pagination count={productPage?.totalPages} page={currentPage} onChange={handleChange} />
+          <Pagination
+            count={productPage?.totalPages}
+            page={currentPage}
+            onChange={handleChange}
+          />
         </div>
       </div>
     </div>

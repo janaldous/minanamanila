@@ -12,6 +12,7 @@ import {
 } from "api/minanamanila-api-client/api";
 import { ProductGridWithApi } from "customer-components/productgrid/ProductGridWithApi";
 import { config } from "axiosConfig";
+import { CartContext } from "context/CartContext";
 
 export interface ProductDetailProps {
   username: string;
@@ -26,6 +27,7 @@ export interface ProductDetailProps {
   dateListed: string;
   imageURL?: string;
   variations?: Array<any>;
+  product: Product;
 }
 
 export const ProductDetailWithApi: React.FC<{}> = () => {
@@ -60,19 +62,26 @@ export const ProductDetailWithApi: React.FC<{}> = () => {
       condition={"Used - Like New"}
       itemsSold={807}
       dateListed={"8h ago"}
-      imageURL={product.pictureUrl ? `${config.basePath}/static/` + product.pictureUrl : undefined}
+      imageURL={
+        product.pictureUrl
+          ? `${config.basePath}/static/` + product.pictureUrl
+          : undefined
+      }
+      product={product}
     />
   );
 };
 
 export const ProductDetail: React.FC<ProductDetailProps> = (props) => {
-  const handleContactSeller = () => {
-    alert("will contact seller");
-  };
+  const { addProduct } = React.useContext(CartContext);
 
   const location = useLocation();
 
   const { id } = QueryString.parse(location.search.substring(1));
+
+  const handleContactSeller = () => {
+    addProduct(props.product);
+  };
 
   return (
     <div className="product-detail">
@@ -120,7 +129,9 @@ export const ProductDetail: React.FC<ProductDetailProps> = (props) => {
             <div className="mt-3">
               <span className="mr-1">Variations: </span>
               {props.variations?.map((variation, index) => (
-                <div key={index} className="badge badge-secondary mr-1">{variation}</div>
+                <div key={index} className="badge badge-secondary mr-1">
+                  {variation}
+                </div>
               ))}
             </div>
             <div className="mt-3">{props.size}</div>
