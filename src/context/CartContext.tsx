@@ -1,37 +1,40 @@
 import { Product } from "api/minanamanila-api-client/api";
 import React, { createContext, useReducer } from "react";
-import { CartReducer, CartState, sumItems } from "./CartReducer";
+import { cartReducer, CartState, sumItems } from "./CartReducer";
 
 const storage = localStorage.getItem("cart")
   ? JSON.parse(localStorage.getItem("cart") || "")
   : [];
 
 const initialState: CartState = {
-  cartItems: storage,
+  items: storage,
   ...sumItems(storage),
-  checkout: false,
+  isCheckout: false,
+  deliveryFee: 100,
 };
 
-export const CartContext = createContext<any>(null);
+export const CartContext = React.createContext<CartContextType>(
+  {} as CartContextType
+);
 
 interface CartContextType {
   removeProduct: (id: number) => void;
   addProduct: (product: Product) => void;
-  increase: (id: number) => void;
-  decrease: (id: number) => void;
+  increaseQuantity: (id: number) => void;
+  decreaseQuantity: (id: number) => void;
   clearCart: () => void;
   handleCheckout: () => void;
   cart: CartState;
 }
 
 const CartContextProvider: React.FC<any> = ({ children }) => {
-  const [state, dispatch] = useReducer(CartReducer, initialState);
+  const [state, dispatch] = useReducer(cartReducer, initialState);
 
-  const increase = (payload) => {
+  const increaseQuantity = (payload) => {
     dispatch({ type: "INCREASE", payload });
   };
 
-  const decrease = (payload) => {
+  const decreaseQuantity = (payload) => {
     dispatch({ type: "DECREASE", payload });
   };
 
@@ -55,8 +58,8 @@ const CartContextProvider: React.FC<any> = ({ children }) => {
   const contextValues: CartContextType = {
     removeProduct,
     addProduct,
-    increase,
-    decrease,
+    increaseQuantity: increaseQuantity,
+    decreaseQuantity: decreaseQuantity,
     clearCart,
     handleCheckout,
     cart: state,

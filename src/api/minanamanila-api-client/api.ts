@@ -616,7 +616,7 @@ export interface Product {
      * @type {string}
      * @memberof Product
      */
-    brand?: string;
+    brand: string;
     /**
      * 
      * @type {Array<Category>}
@@ -640,25 +640,25 @@ export interface Product {
      * @type {string}
      * @memberof Product
      */
-    description?: string;
+    description: string;
     /**
      * 
      * @type {number}
      * @memberof Product
      */
-    id?: number;
+    id: number;
     /**
      * 
      * @type {string}
      * @memberof Product
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof Product
      */
-    pictureUrl?: string;
+    pictureUrl: string;
     /**
      * 
      * @type {number}
@@ -670,7 +670,7 @@ export interface Product {
      * @type {number}
      * @memberof Product
      */
-    unitPrice?: number;
+    unitPrice: number;
 }
 /**
  * 
@@ -708,13 +708,13 @@ export interface ProductDto {
      * @type {number}
      * @memberof ProductDto
      */
-    id?: number;
+    id: number;
     /**
      * 
      * @type {number}
      * @memberof ProductDto
      */
-    quantity?: number;
+    quantity: number;
 }
 /**
  * 

@@ -19,6 +19,7 @@ import { TheTawadPage } from "./textpage/comingsoon/TheTawadPage";
 import { YourMeasurementsPage } from "./textpage/comingsoon/YourMeasurementsPage";
 import { Apple } from "./apple/Apple";
 import CartContextProvider from "context/CartContext";
+import CartPage from "./cart-page/CartPage";
 
 const Customer: React.FC<{}> = () => {
   const [cart, setCart] = React.useState<CheckoutCart>({
@@ -143,6 +144,9 @@ const Customer: React.FC<{}> = () => {
                   </Route>
                   <Route path={Routes.SearchResult}>
                     <Apple />
+                  </Route>
+                  <Route path={Routes.Cart}>
+                    <CartPage />
                   </Route>
                   <Route path={Routes.Detail}>
                     <ProductDetailWithApi />

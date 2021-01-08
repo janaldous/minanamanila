@@ -9,7 +9,7 @@ const Storage = (cartItems) => {
 
 export const sumItems = (
   cartItems: Array<ProductWithQuantity>
-): { itemCount: number; total: number } => {
+): { itemCount: number; totalPrice: number } => {
   Storage(cartItems);
   let itemCount = cartItems.reduce(
     (total, product) => total + product.quantity,
@@ -19,77 +19,83 @@ export const sumItems = (
     (total, product) => total + (product.unitPrice ?? 0) * product.quantity,
     0
   );
-  return { itemCount, total };
+  return { itemCount, totalPrice: total };
 };
 
-type ProductWithQuantity = Product & { quantity: number };
+export type ProductWithQuantity = Product & { quantity: number };
 
 export interface CartState {
-  cartItems: Array<ProductWithQuantity>;
-  checkout: boolean;
+  items: Array<ProductWithQuantity>;
+  isCheckout: boolean;
+  itemCount: number;
+  totalPrice: number;
+  deliveryFee: number;
 }
 
-export const CartReducer = (state: CartState, action): CartState => {
+export const cartReducer = (state: CartState, action): CartState => {
   switch (action.type) {
     case "ADD_ITEM":
-      let newCartItems = state.cartItems;
-      if (!state.cartItems.find((item) => item.id === action.payload.id)) {
-        state.cartItems.push({
+      let newCartItems = state.items;
+      if (!newCartItems.find((item) => item.id === action.payload.id)) {
+        newCartItems.push({
           ...action.payload,
           quantity: 1,
         });
       } else {
-        newCartItems = state.cartItems.map((x) => {
-          if (x.id === action.payload.id) {
-            return { ...x, quantity: x.quantity++ };
+        newCartItems = newCartItems.map((item) => {
+          if (item.id === action.payload.id) {
+            return { ...item, quantity: ++item.quantity };
           }
-          return x;
+          return item;
         });
       }
 
       return {
         ...state,
-        ...sumItems(state.cartItems),
-        cartItems: [...state.cartItems],
+        items: [...newCartItems],
+        ...sumItems(newCartItems),
       };
     case "REMOVE_ITEM":
       return {
         ...state,
         ...sumItems(
-          state.cartItems.filter((item) => item.id !== action.payload.id)
+          state.items.filter((item) => item.id !== action.payload.id)
         ),
-        cartItems: [
-          ...state.cartItems.filter((item) => item.id !== action.payload.id),
-        ],
+        items: [...state.items.filter((item) => item.id !== action.payload.id)],
       };
-    case "INCREASE":
-      state.cartItems[
-        state.cartItems.findIndex((item) => item.id === action.payload.id)
-      ].quantity++;
+    case "INCREASE_QUANTITY":
+      const index = state.items.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      if (index === -1) {
+        return state;
+      }
+      ++state.items[index].quantity;
       return {
         ...state,
-        ...sumItems(state.cartItems),
-        cartItems: [...state.cartItems],
+        ...sumItems(state.items),
+        items: [...state.items],
       };
     case "DECREASE":
-      state.cartItems[
-        state.cartItems.findIndex((item) => item.id === action.payload.id)
+      state.items[
+        state.items.findIndex((item) => item.id === action.payload.id)
       ].quantity--;
       return {
         ...state,
-        ...sumItems(state.cartItems),
-        cartItems: [...state.cartItems],
+        ...sumItems(state.items),
+        items: [...state.items],
       };
     case "CHECKOUT":
       return {
-        cartItems: [],
-        checkout: true,
+        ...state,
+        items: [],
+        isCheckout: true,
         ...sumItems([]),
       };
     case "CLEAR":
       return {
         ...state,
-        cartItems: [],
+        items: [],
         ...sumItems([]),
       };
     default:

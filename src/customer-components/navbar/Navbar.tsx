@@ -7,12 +7,17 @@ import Button from "react-bootstrap/Button";
 import logo from "../minanamanila_thin-removebg-preview.png";
 import SearchIcon from "@material-ui/icons/Search";
 import { CartContext } from "context/CartContext";
+import { useHistory } from "react-router-dom";
+import { Routes } from "Routes";
 
 export const MyNavbar: React.FC<{ toggleSideBar: () => void }> = (props) => {
   const [show, setShow] = React.useState(false);
+  const history = useHistory();
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClosePopup = () => setShow(false);
+  const handleShowPopup = () => setShow(true);
+
+  const handleShowCart = () => history.push(Routes.Cart);
 
   const { cart } = React.useContext(CartContext);
 
@@ -29,20 +34,23 @@ export const MyNavbar: React.FC<{ toggleSideBar: () => void }> = (props) => {
           <div className="d-flex flex-row-reverse">
             <div
               className="font-weight-bold cursor-pointer"
-              onClick={handleShow}
+              onClick={handleShowPopup}
             >
               Login
             </div>
             <div className="font-weight-bold pr-3">
               <SearchIcon />
             </div>
-            <div className="font-weight-bold pr-3" onClick={handleShow}>
+            <div
+              className="font-weight-bold pr-3 cursor-pointer"
+              onClick={handleShowCart}
+            >
               Cart : {cart.itemCount}
             </div>
           </div>
         </div>
       </Navbar>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClosePopup}>
         <Modal.Header closeButton>
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
