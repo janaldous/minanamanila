@@ -1,5 +1,5 @@
 import { Product } from "api/minanamanila-api-client/api";
-import React, { createContext, useReducer } from "react";
+import React, { useReducer } from "react";
 import { cartReducer, CartState, sumItems } from "./CartReducer";
 
 const storage = localStorage.getItem("cart")
@@ -30,12 +30,12 @@ interface CartContextType {
 const CartContextProvider: React.FC<any> = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
 
-  const increaseQuantity = (payload) => {
-    dispatch({ type: "INCREASE", payload });
+  const increaseQuantity = (id: number) => {
+    dispatch({ type: "INCREASE_QUANTITY", payload: { id } });
   };
 
-  const decreaseQuantity = (payload) => {
-    dispatch({ type: "DECREASE", payload });
+  const decreaseQuantity = (id: number) => {
+    dispatch({ type: "DECREASE_QUANTITY", payload: { id } });
   };
 
   const addProduct = (payload: Product) => {

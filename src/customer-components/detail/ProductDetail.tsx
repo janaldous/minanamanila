@@ -88,7 +88,11 @@ export const ProductDetail: React.FC<ProductDetailProps> = (props) => {
       <div className="row">
         <div className="col-6 d-flex justify-content-center">
           {props.imageURL ? (
-            <img src={props.imageURL} className="w-100 product-image" />
+            <img
+              src={props.imageURL}
+              alt="product"
+              className="w-100 product-image"
+            />
           ) : (
             <ProductPicture id={Number(id)} className="w-100" />
           )}

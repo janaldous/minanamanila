@@ -22,7 +22,7 @@ export const ProductGridWithApi: React.FC<ProductGridWithApiProps> = (
     };
 
     getSuggestedProducts();
-  }, []);
+  }, [props.id]);
 
   if (!products) {
     return <div>Loading...</div>;

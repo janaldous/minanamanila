@@ -45,7 +45,7 @@ export const MyNavbar: React.FC<{ toggleSideBar: () => void }> = (props) => {
               className="font-weight-bold pr-3 cursor-pointer"
               onClick={handleShowCart}
             >
-              Cart : {cart.itemCount}
+              Cart : {cart.items.length}
             </div>
           </div>
         </div>

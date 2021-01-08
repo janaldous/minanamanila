@@ -25,7 +25,7 @@ export const Item: React.FC<ItemProps> = (props) => {
       <div className="pic-container position-relative">
         <Link to={`${Routes.Detail}?id=${props.id}`}>
           {props.imageURL ? (
-            <img src={props.imageURL} className="w-100" />
+            <img src={props.imageURL} alt="item" className="w-100" />
           ) : (
             <ProductPicture
               id={normalizedId}
@@ -35,7 +35,9 @@ export const Item: React.FC<ItemProps> = (props) => {
           <div className="pic-overlay position-absolute"></div>
         </Link>
       </div>
-      <div className="price font-weight-bold text-center">{`${formatCurrency(price)}`}</div>
+      <div className="price font-weight-bold text-center">{`${formatCurrency(
+        price
+      )}`}</div>
     </div>
   );
 };
