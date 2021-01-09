@@ -8,7 +8,7 @@ const storage = localStorage.getItem("cart")
 
 const initialState: CartState = {
   items: storage,
-  ...sumItems(storage),
+  ...sumItems(storage, 100),
   isCheckout: false,
   deliveryFee: 100,
 };

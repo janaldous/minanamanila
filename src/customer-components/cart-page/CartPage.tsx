@@ -49,7 +49,7 @@ const CartPage: React.FC<{}> = (props) => {
               <Row>
                 <Col xs={9}>Subtotal</Col>
                 <Col xs={3}>
-                  ₱<span data-testid="subtotal">{cart.totalPrice}</span>
+                  ₱<span data-testid="subtotal">{cart.subtotalPrice}</span>
                 </Col>
               </Row>
               <Row>

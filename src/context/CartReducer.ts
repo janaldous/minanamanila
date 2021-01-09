@@ -8,18 +8,23 @@ const Storage = (cartItems) => {
 };
 
 export const sumItems = (
-  cartItems: Array<ProductWithQuantity>
-): { itemCount: number; totalPrice: number } => {
+  cartItems: Array<ProductWithQuantity>,
+  deliveryFee: number
+): { itemCount: number; subtotalPrice: number; totalPrice: number } => {
   Storage(cartItems);
   let itemCount = cartItems.reduce(
     (total, product) => total + product.quantity,
     0
   );
-  let total = cartItems.reduce(
+  let subtotal = cartItems.reduce(
     (total, product) => total + (product.unitPrice ?? 0) * product.quantity,
     0
   );
-  return { itemCount, totalPrice: total };
+  return {
+    itemCount,
+    subtotalPrice: subtotal,
+    totalPrice: subtotal ? subtotal + deliveryFee : 0,
+  };
 };
 
 export type ProductWithQuantity = Product & { quantity: number };
@@ -28,8 +33,9 @@ export interface CartState {
   items: Array<ProductWithQuantity>;
   isCheckout: boolean;
   itemCount: number;
-  totalPrice: number;
   deliveryFee: number;
+  subtotalPrice: number;
+  totalPrice: number;
 }
 
 export const cartReducer = (state: CartState, action): CartState => {
@@ -53,13 +59,14 @@ export const cartReducer = (state: CartState, action): CartState => {
       return {
         ...state,
         items: [...newCartItems],
-        ...sumItems(newCartItems),
+        ...sumItems(newCartItems, state.deliveryFee),
       };
     case "REMOVE_ITEM":
       return {
         ...state,
         ...sumItems(
-          state.items.filter((item) => item.id !== action.payload.id)
+          state.items.filter((item) => item.id !== action.payload.id),
+          state.deliveryFee
         ),
         items: [...state.items.filter((item) => item.id !== action.payload.id)],
       };
@@ -73,7 +80,7 @@ export const cartReducer = (state: CartState, action): CartState => {
       ++state.items[index].quantity;
       return {
         ...state,
-        ...sumItems(state.items),
+        ...sumItems(state.items, state.deliveryFee),
         items: [...state.items],
       };
     case "DECREASE":
@@ -82,7 +89,7 @@ export const cartReducer = (state: CartState, action): CartState => {
       ].quantity--;
       return {
         ...state,
-        ...sumItems(state.items),
+        ...sumItems(state.items, state.deliveryFee),
         items: [...state.items],
       };
     case "CHECKOUT":
@@ -90,13 +97,13 @@ export const cartReducer = (state: CartState, action): CartState => {
         ...state,
         items: [],
         isCheckout: true,
-        ...sumItems([]),
+        ...sumItems([], state.deliveryFee),
       };
     case "CLEAR":
       return {
         ...state,
         items: [],
-        ...sumItems([]),
+        ...sumItems([], state.deliveryFee),
       };
     default:
       return state;

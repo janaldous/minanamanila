@@ -8,8 +8,9 @@ import {
 describe("Cart reducer", () => {
   test("sumItems - empty list", () => {
     const cartItems: Array<ProductWithQuantity> = [];
-    const result = sumItems(cartItems);
+    const result = sumItems(cartItems, 100);
     expect(result.itemCount).toBe(0);
+    expect(result.subtotalPrice).toBe(0);
     expect(result.totalPrice).toBe(0);
   });
 
@@ -25,9 +26,10 @@ describe("Cart reducer", () => {
         quantity: 1,
       },
     ];
-    const result = sumItems(cartItems);
+    const result = sumItems(cartItems, 100);
     expect(result.itemCount).toBe(1);
-    expect(result.totalPrice).toBe(45000);
+    expect(result.subtotalPrice).toBe(45000);
+    expect(result.totalPrice).toBe(45100);
   });
 
   test("add first item", () => {
@@ -36,7 +38,7 @@ describe("Cart reducer", () => {
       isCheckout: false,
       itemCount: 0,
       items: [],
-      totalPrice: 0,
+      subtotalPrice: 0,
     };
     const action = {
       type: "ADD_ITEM",
@@ -52,7 +54,7 @@ describe("Cart reducer", () => {
 
     const result = cartReducer(state, action);
     expect(result.itemCount).toBe(1);
-    expect(result.totalPrice).toBe(action.payload.unitPrice);
+    expect(result.subtotalPrice).toBe(action.payload.unitPrice);
   });
 
   test("add second item", () => {
@@ -71,7 +73,7 @@ describe("Cart reducer", () => {
           quantity: 1,
         },
       ],
-      totalPrice: 45000,
+      subtotalPrice: 45000,
     };
     const action = {
       type: "ADD_ITEM",
@@ -87,7 +89,7 @@ describe("Cart reducer", () => {
 
     const result = cartReducer(state, action);
     expect(result.itemCount).toBe(2);
-    expect(result.totalPrice).toBe(90000);
+    expect(result.subtotalPrice).toBe(90000);
   });
 
   test("increase quantity of existing item", () => {
@@ -106,7 +108,7 @@ describe("Cart reducer", () => {
           quantity: 1,
         },
       ],
-      totalPrice: 45000,
+      subtotalPrice: 45000,
     };
     const action = {
       type: "INCREASE_QUANTITY",
@@ -115,6 +117,6 @@ describe("Cart reducer", () => {
 
     const result = cartReducer(state, action);
     expect(result.itemCount).toBe(2);
-    expect(result.totalPrice).toBe(90000);
+    expect(result.subtotalPrice).toBe(90000);
   });
 });
