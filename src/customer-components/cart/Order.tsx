@@ -35,6 +35,7 @@ export default function Order() {
     decreaseQuantity,
     handleChange,
     confirmOrder,
+    clearCart,
   } = React.useContext(CartContext);
 
   const [step, setStep] = React.useState<number>(0);
@@ -66,6 +67,7 @@ export default function Order() {
         const { data } = res;
         confirmOrder(data.orderNumber);
         setLoading(false);
+        clearCart();
         return Promise.resolve(true);
       })
       .catch((err) => {

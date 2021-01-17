@@ -15,7 +15,7 @@ export const ProductGrid2: React.FC<ProductGridProps2> = (props) => {
   }
 
   return (
-    <div className="product-grid">
+    <div className="product-grid w-100">
       {arrayOfArrays.map((row) => (
         <div className="row mt-3" key={row[0].id}>
           {row.map((column) => (
@@ -24,7 +24,11 @@ export const ProductGrid2: React.FC<ProductGridProps2> = (props) => {
               className="col"
               id={Number(column.id)}
               price={column.unitPrice}
-              imageURL={column.pictureUrl ? `${config.basePath}/static/` + column.pictureUrl : undefined}
+              imageURL={
+                column.pictureUrl
+                  ? `${config.basePath}/static/` + column.pictureUrl
+                  : undefined
+              }
             />
           ))}
         </div>

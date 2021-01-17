@@ -24,7 +24,7 @@ import { getInitialCartContext, getInitialCartState } from "./cartTestUtil";
 import Order from "./Order";
 import { DeliveryData } from "./OrderModel";
 
-const defaultValues: DeliveryData = {
+const defaultValues: Required<DeliveryData> = {
   firstName: "John",
   lastName: "Doe",
   contactNumber: "09123456789",
@@ -34,6 +34,7 @@ const defaultValues: DeliveryData = {
   deliveryType: OrderDtoDeliveryTypeEnum.MEETUP,
   paymentType: OrderDtoPaymentTypeEnum.CASH,
   deliveryDate: new Date("2020-07-01T12:00:00Z"),
+  specialInstructions: "Please leave the parcel at the guardhouse",
 };
 
 const fillInDeliveryFormDefault = (result: RenderResult) => {

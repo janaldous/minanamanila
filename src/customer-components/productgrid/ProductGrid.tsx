@@ -14,7 +14,7 @@ export const ProductGrid: React.FC<ProductGridProps> = (props) => {
   // console.log(rowArray, colArray);
 
   return (
-    <div className="product-grid">
+    <div className="product-grid w-100">
       {rowArray.map((y) => (
         <div className="row mt-3" key={y}>
           {colArray.map((x) => (
