@@ -1,20 +1,30 @@
-import { OrderDto, OrderConfirmation, DeliveryDate, Product } from "./models";
-import axios, { AxiosPromise } from "axios";
-import { BASE_PATH } from "./runtime";
+import { AxiosPromise } from "axios";
+import {
+  OrderConfirmation,
+  OrderDto,
+  PageProduct,
+  Product,
+  PublicControllerApiFactory,
+} from "./minanamanila-api-client/api";
 
 export default class OrderApi {
   static postOrder(orderDto: OrderDto): AxiosPromise<OrderConfirmation> {
-    return axios.post(`${BASE_PATH}/api/order`, orderDto);
+    const publicApi = PublicControllerApiFactory();
+    return publicApi.orderUsingPOST(orderDto);
   }
 
-  static getDeliveryDates(
-    page: number,
-    size: number
-  ): AxiosPromise<Array<DeliveryDate>> {
-    return axios.get(`${BASE_PATH}/api/delivery`, { params: { page, size } });
+  static getProducts(page: number, size: number): AxiosPromise<PageProduct> {
+    const publicApi = PublicControllerApiFactory();
+    return publicApi.getProductsUsingGET(page, size);
   }
 
-  static getProducts(page: number, size: number): AxiosPromise<Array<Product>> {
-    return axios.get(`${BASE_PATH}/api/products`, { params: { page, size } });
+  static getProductSuggestions(id: number): AxiosPromise<PageProduct> {
+    const publicApi = PublicControllerApiFactory();
+    return publicApi.getProductSuggestionsUsingGET(id);
+  }
+
+  static getProductDetail(id: number): AxiosPromise<Product> {
+    const publicApi = PublicControllerApiFactory();
+    return publicApi.getProductUsingGET(id);
   }
 }

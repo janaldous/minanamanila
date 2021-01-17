@@ -1,18 +1,14 @@
 import React from "react";
 import { TextPage, TextPageProps } from "../TextPage";
-import {
-  Product,
-  PublicControllerApiFactory,
-} from "../../../api/minanamanila-api-client/api";
-import { config } from "axiosConfig";
+import { Product } from "../../../api/minanamanila-api-client/api";
+import PublicApi from "api/PublicApi";
 
 export const ComingSoonPage: React.FC<TextPageProps> = (props) => {
   const [products, setProducts] = React.useState<Array<Product>>();
 
   React.useEffect(() => {
     const getProducts = async () => {
-      const publicApi = PublicControllerApiFactory(config);
-      const result = await publicApi.getProductsUsingGET(0, 10);
+      const result = await PublicApi.getProducts(0, 10);
       setProducts(result.data.content);
     };
 

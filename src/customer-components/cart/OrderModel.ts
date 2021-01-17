@@ -1,22 +1,24 @@
-import { OrderDtoDeliveryTypeEnum, OrderDtoPaymentTypeEnum, DeliveryDate } from "../../api/models";
-import { ProductDto } from "api/models/OrderDto";
+import { CartState, ProductWithQuantity } from "context/CartReducer";
+import {
+  OrderDtoDeliveryTypeEnum,
+  OrderDtoPaymentTypeEnum,
+  DeliveryDate,
+} from "../../api/models";
 
 export interface OrderData {
-  items: Array<ProductDto>;
+  items: Array<ProductWithQuantity>;
   subtotal: number;
   deliveryFee: number;
   total: number;
-  price: 165;
   deliveryForm: {
     formValues: DeliveryData;
     formErrors: Partial<DeliveryData>;
     formTouched: DeliveryDataTouched;
     isSubmitting: boolean;
-  }
+  };
   orderConfirmation?: {
     orderNumber?: number;
-  },
-  availableDeliveryDates: Array<DeliveryDate>,
+  };
 }
 
 export interface DeliveryData {
@@ -29,7 +31,7 @@ export interface DeliveryData {
   specialInstructions?: string;
   deliveryType?: OrderDtoDeliveryTypeEnum;
   paymentType?: OrderDtoPaymentTypeEnum;
-  deliveryDateId?: number;
+  deliveryDate?: Date;
 }
 
 export interface DeliveryDataTouched {
@@ -47,8 +49,9 @@ export interface DeliveryDataTouched {
 
 export interface OrderComponentProps {
   onNext?: () => void;
-  data: OrderData;
-  onChange?: (e: any) => void;
-  onSubmit?: () => Promise<boolean>;
-  onValidate?: () => boolean;
+  data: CartState;
+}
+
+export interface OrderComponentFormProps {
+  onChange?: (name: string, value: any) => void;
 }

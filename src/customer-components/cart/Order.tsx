@@ -1,19 +1,19 @@
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import { OrderDto } from "api/minanamanila-api-client/api";
+import { CartContext } from "context/CartContext";
+import { CartState } from "context/CartReducer";
+import { format } from "date-fns";
 import React from "react";
-import OrderInfo from "./OrderInfo";
+import Navbar from "react-bootstrap/Navbar";
+import Spinner from "react-bootstrap/Spinner";
+import { isBrowser } from "react-device-detect";
+import { Link } from "react-router-dom";
+import PublicApi from "../../api/PublicApi";
 import DeliveryInfo from "./DeliveryInfo";
 import OrderConfirmation from "./OrderConfirmation";
-import Navbar from "react-bootstrap/Navbar";
-import logo from "../../logo.jpg";
-import OrderSummary from "./OrderSummary";
-import { OrderData, DeliveryData } from "./OrderModel";
-import { OrderDto, OrderDtoDeliveryTypeEnum } from "../../api/models";
-import Spinner from "react-bootstrap/Spinner";
-import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
-import { isBrowser } from "react-device-detect";
-import PublicApi from "../../api/PublicApi";
 import OrderError from "./OrderError";
-import { Link } from "react-router-dom";
-import { CustomerContext } from "customer-components/CustomerContext";
+import OrderInfo from "./OrderInfo";
+import OrderSummary from "./OrderSummary";
 
 const inputNameMapper = {
   "given-name": "firstName",
@@ -29,71 +29,16 @@ const inputNameMapper = {
 };
 
 export default function Order() {
-  const { cart, onCartChange } = React.useContext(CustomerContext);
+  const {
+    cart,
+    increaseQuantity,
+    decreaseQuantity,
+    handleChange,
+    confirmOrder,
+  } = React.useContext(CartContext);
+
   const [step, setStep] = React.useState<number>(0);
   const [loading, setLoading] = React.useState<boolean>(false);
-  const [data, setData] = React.useState<OrderData>({
-    items: cart.items,
-    subtotal: 165,
-    deliveryFee: 0,
-    total: 165,
-    price: 165,
-    deliveryForm: {
-      formValues: {
-        firstName: "",
-        lastName: "",
-        contactNumber: "",
-        addressLine1: "",
-        addressLine2: "",
-        city: "Sta. Rosa",
-        deliveryType: undefined,
-        paymentType: undefined,
-        deliveryDateId: undefined,
-      },
-      formErrors: {},
-      formTouched: {
-        firstName: false,
-        lastName: false,
-        contactNumber: false,
-        addressLine1: false,
-        addressLine2: false,
-        deliveryType: false,
-        paymentType: false,
-        city: false,
-        specialInstructions: false,
-        deliveryDate: false,
-      },
-      isSubmitting: false,
-    },
-    availableDeliveryDates: [],
-  });
-
-  React.useEffect(() => {
-    getDeliveryDatesFromApi();
-  }, []);
-
-  const getDeliveryDatesFromApi = () => {
-    PublicApi.getDeliveryDates(0, 5)
-      .then((res) => {
-        const { data } = res;
-        if (data.length <= 0)
-          throw new Error("Api responded with no delivery dates");
-
-        setData((oldData) => {
-          const newData = { ...oldData };
-          newData.availableDeliveryDates = data;
-
-          if (!newData.deliveryForm.formValues.deliveryDateId) {
-            newData.deliveryForm.formValues.deliveryDateId = data[0].id;
-          }
-
-          return newData;
-        });
-      })
-      .catch((err) => {
-        setStep(400);
-      });
-  };
 
   const handleNext = () => {
     setStep((oldStep) => oldStep + 1);
@@ -103,103 +48,23 @@ export default function Order() {
     setStep((oldStep) => oldStep - 1);
   };
 
-  const handleChange = (e: any) => {
-    let value = e.target.value;
+  /**
+   * Map between UI input name tag to context object name
+   * @param name
+   */
+  const handleMappedChange = (name: string, value: any) => {
+    name = inputNameMapper[name] || name;
 
-    let name = inputNameMapper[e.currentTarget.name] || e.currentTarget.name;
-    // console.log(`changing ${name} to ${value} ${e.target.value}`)
-
-    if (name === "deliveryDateId") value = parseInt(value);
-
-    setData((oldData) => {
-      const newData = {
-        ...oldData,
-        deliveryForm: {
-          ...oldData.deliveryForm,
-          formValues: { ...oldData.deliveryForm.formValues, [name]: value },
-          formTouched: { ...oldData.deliveryForm.formTouched, [name]: true },
-        },
-      };
-
-      if (
-        newData.deliveryForm.formValues.deliveryType !==
-        oldData.deliveryForm.formValues.deliveryType
-      ) {
-        const { formValues } = newData.deliveryForm;
-        formValues.addressLine1 = "";
-        formValues.addressLine2 = "";
-        formValues.specialInstructions = "";
-      }
-
-      const errors = validate(newData.deliveryForm.formValues);
-      if (newData.deliveryForm.formTouched) {
-        newData.deliveryForm.formErrors = {
-          ...newData.deliveryForm.formErrors,
-          [name]: errors[name],
-        };
-      }
-      newData.deliveryForm.isSubmitting = Object.keys(errors).length === 0;
-      return newData;
-    });
-  };
-
-  const validateForm = () => {
-    const errors = validate(data.deliveryForm.formValues);
-    setData((oldData) => {
-      const newData = { ...oldData };
-      newData.deliveryForm.formErrors = errors;
-      return newData;
-    });
-    const isValid = Object.keys(errors).length === 0;
-    return isValid;
-  };
-
-  const getOrderDto = () => {
-    const deliveryInfo = data.deliveryForm.formValues;
-
-    if (
-      !deliveryInfo.deliveryType ||
-      !deliveryInfo.paymentType ||
-      !deliveryInfo.deliveryDateId
-    ) {
-      throw new Error();
-    }
-
-    const orderDto: OrderDto = {
-      address: {
-        line1: deliveryInfo.addressLine1,
-        village: deliveryInfo.addressLine2,
-        city: deliveryInfo.city,
-        province: "Laguna",
-        postcode: "4026",
-        specialInstructions: deliveryInfo.specialInstructions,
-      },
-      deliveryType: deliveryInfo.deliveryType,
-      paymentType: deliveryInfo.paymentType,
-      products: cart.items.map((item) => ({id: item.id, quantity: item.quantity})),
-      deliveryDateId: deliveryInfo.deliveryDateId,
-      user: {
-        firstName: deliveryInfo.firstName,
-        lastName: deliveryInfo.lastName,
-        contactNumber: deliveryInfo.contactNumber,
-      },
-    };
-
-    return orderDto;
+    handleChange(name, value);
   };
 
   const handleSubmitOrder = async () => {
-    const orderDto = getOrderDto();
+    const orderDto = getOrderDto(cart);
     setLoading(true);
     const result = await PublicApi.postOrder(orderDto)
       .then((res) => {
         const { data } = res;
-        setData((oldData) => ({
-          ...oldData,
-          orderConfirmation: {
-            orderNumber: data.orderNumber,
-          },
-        }));
+        confirmOrder(data.orderNumber);
         setLoading(false);
         return Promise.resolve(true);
       })
@@ -210,28 +75,6 @@ export default function Order() {
       });
 
     return result;
-  };
-
-  const validate = (values: DeliveryData) => {
-    const errors: any = {};
-    if (!values.firstName) errors.firstName = "Required";
-    if (!values.lastName) errors.lastName = "Required";
-    if (!values.contactNumber) errors.contactNumber = "Required";
-    const regexMobileNumber = RegExp("^09[0-9]{9}$");
-    if (values.contactNumber && !regexMobileNumber.test(values.contactNumber)) {
-      errors.contactNumber = "Invalid mobile number";
-    }
-    if (!values.deliveryType) errors.deliveryType = "Required";
-    if (!values.paymentType) errors.paymentType = "Required";
-    if (values.deliveryType === OrderDtoDeliveryTypeEnum.DELIVER) {
-      if (!values.addressLine1) errors.addressLine1 = "Required";
-      if (!values.addressLine2) errors.addressLine2 = "Required";
-      if (values.city !== "Sta. Rosa")
-        errors.city = "Sorry, we currently only deliver to Sta. Rosa";
-    } else if (values.deliveryType === OrderDtoDeliveryTypeEnum.MEETUP) {
-      if (!values.specialInstructions) errors.specialInstructions = "Required";
-    }
-    return errors;
   };
 
   const getBackButton = (step: number) => {
@@ -262,19 +105,19 @@ export default function Order() {
         return (
           <OrderInfo
             onNext={handleNext}
-            data={data}
+            data={cart}
             items={cart.items}
-            total={cart.total}
-            onQuantityChange={onCartChange}
+            total={cart.totalPrice}
+            onIncreaseQuantity={increaseQuantity}
+            onDecreaseQuantity={decreaseQuantity}
           />
         );
       case 1:
         return (
           <DeliveryInfo
             onNext={handleNext}
-            data={data}
-            onChange={handleChange}
-            onValidate={validateForm}
+            data={cart}
+            onChange={handleMappedChange}
           />
         );
       case 2:
@@ -282,13 +125,13 @@ export default function Order() {
           <OrderSummary
             onNext={handleNext}
             items={cart.items}
-            total={cart.total}
-            data={data}
+            total={cart.totalPrice}
+            data={cart}
             onSubmit={handleSubmitOrder}
           />
         );
       case 3:
-        return <OrderConfirmation data={data} />;
+        return <OrderConfirmation data={cart} />;
       case 400:
         return <OrderError />;
       default:
@@ -312,12 +155,50 @@ export default function Order() {
     <div className="order-container">
       <Navbar className="custom-navbar">
         <div className="flex-1-only">{getBackButton(step)}</div>
-        <Navbar.Brand className="nav-brand" href="/">
-          <img src={logo} alt="Logo" className="logo" />
-        </Navbar.Brand>
+        <Navbar.Brand className="nav-brand" href="/"></Navbar.Brand>
         <div className="flex-1-only"></div>
       </Navbar>
       <div className="content">{loading ? getSpinner() : getContent(step)}</div>
     </div>
   );
 }
+
+const getOrderDto = (cart: CartState) => {
+  const deliveryInfo = cart.deliveryForm.formValues;
+
+  if (
+    !deliveryInfo.deliveryType ||
+    !deliveryInfo.paymentType ||
+    !deliveryInfo.deliveryDate
+  ) {
+    throw new Error("required deliveryType, paymentType and deliveryDateId");
+  }
+
+  const orderDto: OrderDto = {
+    address: {
+      line1: deliveryInfo.addressLine1,
+      village: deliveryInfo.addressLine2,
+      city: deliveryInfo.city,
+      province: "Laguna",
+      postcode: "4026",
+      specialInstructions: deliveryInfo.specialInstructions,
+    },
+    deliveryType: deliveryInfo.deliveryType,
+    paymentType: deliveryInfo.paymentType,
+    products: cart.items.map((item) => ({
+      id: item.id,
+      quantity: item.quantity,
+    })),
+    deliveryDate: format(
+      deliveryInfo.deliveryDate,
+      "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    ),
+    user: {
+      firstName: deliveryInfo.firstName,
+      lastName: deliveryInfo.lastName,
+      contactNumber: deliveryInfo.contactNumber,
+    },
+  };
+
+  return orderDto;
+};

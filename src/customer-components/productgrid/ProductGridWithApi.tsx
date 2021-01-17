@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {
-  Product,
-  PublicControllerApiFactory,
-} from "api/minanamanila-api-client/api";
+import { Product } from "api/minanamanila-api-client/api";
 import { ProductGrid2 } from "./ProductGrid2";
+import PublicApi from "api/PublicApi";
 
 export interface ProductGridWithApiProps {
   id: number;
@@ -16,8 +14,7 @@ export const ProductGridWithApi: React.FC<ProductGridWithApiProps> = (
 
   useEffect(() => {
     const getSuggestedProducts = async () => {
-      const publicApi = PublicControllerApiFactory();
-      const result = await publicApi.getProductSuggestionsUsingGET(props.id);
+      const result = await PublicApi.getProductSuggestions(props.id);
       setProducts(result.data.content || []);
     };
 

@@ -152,50 +152,6 @@ export interface Category {
 /**
  * 
  * @export
- * @interface DeliveryDate
- */
-export interface DeliveryDate {
-    /**
-     * 
-     * @type {string}
-     * @memberof DeliveryDate
-     */
-    date?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof DeliveryDate
-     */
-    id?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof DeliveryDate
-     */
-    orderLimit?: number;
-}
-/**
- * 
- * @export
- * @interface DeliveryDateDto
- */
-export interface DeliveryDateDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof DeliveryDateDto
-     */
-    date?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof DeliveryDateDto
-     */
-    orderLimit?: number;
-}
-/**
- * 
- * @export
  * @interface OrderConfirmation
  */
 export interface OrderConfirmation {
@@ -250,10 +206,10 @@ export interface OrderDetail {
     billing?: Address;
     /**
      * 
-     * @type {DeliveryDate}
+     * @type {string}
      * @memberof OrderDetail
      */
-    deliveryDate?: DeliveryDate;
+    deliveryDate?: string;
     /**
      * 
      * @type {string}
@@ -342,10 +298,10 @@ export interface OrderDto {
     address: AddressDto;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof OrderDto
      */
-    deliveryDateId: number;
+    deliveryDate: string;
     /**
      * 
      * @type {string}
@@ -1015,117 +971,6 @@ export class AuthControllerApi extends BaseAPI {
 
 
 /**
- * DeliveryControllerApi - axios parameter creator
- * @export
- */
-export const DeliveryControllerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary createDeliveryDate
-         * @param {DeliveryDateDto} deliveryDate deliveryDate
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createDeliveryDateUsingPOST: async (deliveryDate: DeliveryDateDto, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'deliveryDate' is not null or undefined
-            if (deliveryDate === null || deliveryDate === undefined) {
-                throw new RequiredError('deliveryDate','Required parameter deliveryDate was null or undefined when calling createDeliveryDateUsingPOST.');
-            }
-            const localVarPath = `/admin/delivery`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof deliveryDate !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(deliveryDate !== undefined ? deliveryDate : {}) : (deliveryDate || "");
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * DeliveryControllerApi - functional programming interface
- * @export
- */
-export const DeliveryControllerApiFp = function(configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary createDeliveryDate
-         * @param {DeliveryDateDto} deliveryDate deliveryDate
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createDeliveryDateUsingPOST(deliveryDate: DeliveryDateDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeliveryDate>> {
-            const localVarAxiosArgs = await DeliveryControllerApiAxiosParamCreator(configuration).createDeliveryDateUsingPOST(deliveryDate, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-    }
-};
-
-/**
- * DeliveryControllerApi - factory interface
- * @export
- */
-export const DeliveryControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    return {
-        /**
-         * 
-         * @summary createDeliveryDate
-         * @param {DeliveryDateDto} deliveryDate deliveryDate
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createDeliveryDateUsingPOST(deliveryDate: DeliveryDateDto, options?: any): AxiosPromise<DeliveryDate> {
-            return DeliveryControllerApiFp(configuration).createDeliveryDateUsingPOST(deliveryDate, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * DeliveryControllerApi - object-oriented interface
- * @export
- * @class DeliveryControllerApi
- * @extends {BaseAPI}
- */
-export class DeliveryControllerApi extends BaseAPI {
-    /**
-     * 
-     * @summary createDeliveryDate
-     * @param {DeliveryDateDto} deliveryDate deliveryDate
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DeliveryControllerApi
-     */
-    public createDeliveryDateUsingPOST(deliveryDate: DeliveryDateDto, options?: any) {
-        return DeliveryControllerApiFp(this.configuration).createDeliveryDateUsingPOST(deliveryDate, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
  * OrderControllerApi - axios parameter creator
  * @export
  */
@@ -1396,54 +1241,6 @@ export const PublicControllerApiAxiosParamCreator = function (configuration?: Co
     return {
         /**
          * 
-         * @summary getDeliveryDates
-         * @param {number} page page
-         * @param {number} size size
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDeliveryDatesUsingGET: async (page: number, size: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'page' is not null or undefined
-            if (page === null || page === undefined) {
-                throw new RequiredError('page','Required parameter page was null or undefined when calling getDeliveryDatesUsingGET.');
-            }
-            // verify required parameter 'size' is not null or undefined
-            if (size === null || size === undefined) {
-                throw new RequiredError('size','Required parameter size was null or undefined when calling getDeliveryDatesUsingGET.');
-            }
-            const localVarPath = `/api/delivery`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
-            }
-
-            if (size !== undefined) {
-                localVarQueryParameter['size'] = size;
-            }
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Get product suggestions for a particular product
          * @param {number} id id
          * @param {*} [options] Override http request option.
@@ -1615,21 +1412,6 @@ export const PublicControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary getDeliveryDates
-         * @param {number} page page
-         * @param {number} size size
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getDeliveryDatesUsingGET(page: number, size: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DeliveryDate>>> {
-            const localVarAxiosArgs = await PublicControllerApiAxiosParamCreator(configuration).getDeliveryDatesUsingGET(page, size, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
          * @summary Get product suggestions for a particular product
          * @param {number} id id
          * @param {*} [options] Override http request option.
@@ -1696,17 +1478,6 @@ export const PublicControllerApiFactory = function (configuration?: Configuratio
     return {
         /**
          * 
-         * @summary getDeliveryDates
-         * @param {number} page page
-         * @param {number} size size
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDeliveryDatesUsingGET(page: number, size: number, options?: any): AxiosPromise<Array<DeliveryDate>> {
-            return PublicControllerApiFp(configuration).getDeliveryDatesUsingGET(page, size, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Get product suggestions for a particular product
          * @param {number} id id
          * @param {*} [options] Override http request option.
@@ -1756,19 +1527,6 @@ export const PublicControllerApiFactory = function (configuration?: Configuratio
  * @extends {BaseAPI}
  */
 export class PublicControllerApi extends BaseAPI {
-    /**
-     * 
-     * @summary getDeliveryDates
-     * @param {number} page page
-     * @param {number} size size
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PublicControllerApi
-     */
-    public getDeliveryDatesUsingGET(page: number, size: number, options?: any) {
-        return PublicControllerApiFp(this.configuration).getDeliveryDatesUsingGET(page, size, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * 
      * @summary Get product suggestions for a particular product

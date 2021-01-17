@@ -5,25 +5,20 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { OrderComponentProps } from "./OrderModel";
-import { ProductRequiredDto } from "customer-components/product/ProductPage";
-import { QuantityOperation } from "../CustomerContext";
+import { ProductWithQuantity } from "context/CartReducer";
 
 const OrderInfo: React.FC<
   OrderComponentProps & {
-    items: Array<ProductRequiredDto>;
+    items: Array<ProductWithQuantity>;
     total: number;
-    onQuantityChange: (
-      productId: ProductRequiredDto,
-      operation: QuantityOperation,
-      quantity: number
-    ) => void;
+    onIncreaseQuantity: (id: number) => void;
+    onDecreaseQuantity: (id: number) => void;
   }
 > = (props) => {
   const MAX_ORDERS = 6;
 
-  const handleQuantityChange = (e, item) => {
-    const { target } = e;
-    props.onQuantityChange(item, "set", Number(target.value));
+  const handleQuantityChange = (e, item: ProductWithQuantity) => {
+    props.onIncreaseQuantity(item.id);
   };
 
   return (

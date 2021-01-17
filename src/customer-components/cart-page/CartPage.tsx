@@ -4,13 +4,19 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { CartContext } from "context/CartContext";
+import { useHistory } from "react-router-dom";
+import { Routes } from "Routes";
 
-const CartPage: React.FC<{}> = (props) => {
-  const { cart, increaseQuantity } = React.useContext(CartContext);
+const CartPage: React.FC<{}> = () => {
+  const { cart, increaseQuantity, handleCheckout } = React.useContext(
+    CartContext
+  );
+  const history = useHistory();
   const MAX_ORDERS = 6;
 
   const handleGoToCheckout = () => {
-    console.log("Going to checkout");
+    handleCheckout();
+    history.push(Routes.Checkout);
   };
 
   return (
@@ -77,7 +83,7 @@ const CartPage: React.FC<{}> = (props) => {
               className="btn-next w-100"
               onClick={handleGoToCheckout}
             >
-              Two more steps
+              Go to checkout
             </Button>
           </Form>
         </div>

@@ -1,4 +1,9 @@
-import { Product } from "api/minanamanila-api-client/api";
+import {
+  OrderDtoDeliveryTypeEnum,
+  OrderDtoPaymentTypeEnum,
+  Product,
+} from "api/minanamanila-api-client/api";
+import { customerReducer } from "./CustomerReducer";
 
 const Storage = (cartItems) => {
   localStorage.setItem(
@@ -36,6 +41,43 @@ export interface CartState {
   deliveryFee: number;
   subtotalPrice: number;
   totalPrice: number;
+  deliveryForm: DeliveryFormType;
+  orderConfirmation?: {
+    orderNumber?: number;
+  };
+}
+
+export interface DeliveryFormType {
+  formValues: DeliveryData;
+  formErrors: Partial<DeliveryData>;
+  formTouched: DeliveryDataTouched;
+  isSubmitting: boolean;
+}
+
+export interface DeliveryData {
+  firstName: string;
+  lastName: string;
+  contactNumber: string;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  specialInstructions?: string;
+  deliveryType?: OrderDtoDeliveryTypeEnum;
+  paymentType?: OrderDtoPaymentTypeEnum;
+  deliveryDate?: Date;
+}
+
+export interface DeliveryDataTouched {
+  firstName: boolean;
+  lastName: boolean;
+  contactNumber: boolean;
+  addressLine1: boolean;
+  addressLine2: boolean;
+  deliveryType: boolean;
+  paymentType: boolean;
+  city: boolean;
+  specialInstructions: boolean;
+  deliveryDate: boolean;
 }
 
 export const cartReducer = (state: CartState, action): CartState => {
@@ -95,9 +137,7 @@ export const cartReducer = (state: CartState, action): CartState => {
     case "CHECKOUT":
       return {
         ...state,
-        items: [],
         isCheckout: true,
-        ...sumItems([], state.deliveryFee),
       };
     case "CLEAR":
       return {
@@ -106,6 +146,6 @@ export const cartReducer = (state: CartState, action): CartState => {
         ...sumItems([], state.deliveryFee),
       };
     default:
-      return state;
+      return customerReducer(state, action);
   }
 };

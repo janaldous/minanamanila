@@ -9,39 +9,39 @@ import {
   OrderDtoPaymentTypeEnum,
 } from "../../api/models";
 import dateformat from "dateformat";
-import { ProductRequiredDto } from "customer-components/product/ProductPage";
+import { ProductWithQuantity } from "context/CartReducer";
 
-const deliveryTypeMapper = (input: any) => {
+const deliveryTypeMapper = (input?: OrderDtoDeliveryTypeEnum) => {
   switch (input) {
     case OrderDtoDeliveryTypeEnum.MEETUP:
       return "We will meet up at:";
     case OrderDtoDeliveryTypeEnum.DELIVER:
       return "We will deliver to:";
     default:
-      throw new Error();
+      throw new Error("Invalid delivery type: " + input);
   }
 };
 
-const paymentTypeMapper = (input: any) => {
+const paymentTypeMapper = (input?: OrderDtoPaymentTypeEnum) => {
   switch (input) {
     case OrderDtoPaymentTypeEnum.CASH:
       return "Cash on Delivery";
     case OrderDtoPaymentTypeEnum.GCASH:
       return "Paying with GCash";
     default:
-      throw new Error();
+      throw new Error("Invalid payment type: " + input);
   }
 };
 
 const OrderSummary: React.FC<
-  OrderComponentProps & { items: Array<ProductRequiredDto>; total: number }
+  OrderComponentProps & {
+    items: Array<ProductWithQuantity>;
+    total: number;
+    onSubmit?: () => Promise<boolean>;
+  }
 > = (props) => {
-  const { availableDeliveryDates, deliveryForm } = props.data;
+  const { deliveryForm } = props.data;
   const { formValues } = deliveryForm;
-
-  const selectedDeliveryDate = availableDeliveryDates.filter(
-    (x) => x.id === formValues.deliveryDateId
-  )[0]?.date;
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -52,7 +52,7 @@ const OrderSummary: React.FC<
           props.onNext && props.onNext();
         })
         .catch((err) => {
-          /*do nothing*/
+          console.error(err);
         });
     }
   };
@@ -76,7 +76,7 @@ const OrderSummary: React.FC<
             {formValues.specialInstructions}
           </div>
           <div data-testid="deliveryDate">
-            {dateformat(selectedDeliveryDate, "ddd, mmmm d, yyyy")}
+            {dateformat(formValues.deliveryDate, "ddd, mmmm d, yyyy")}
           </div>
         </div>
       </div>

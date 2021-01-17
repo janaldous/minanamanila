@@ -6,13 +6,11 @@ import ReactMarkdown from "react-markdown";
 import { ProductPicture } from "customer-components/productgrid/ProductPicture";
 import QueryString from "query-string";
 import { useLocation } from "react-router-dom";
-import {
-  Product,
-  PublicControllerApiFactory,
-} from "api/minanamanila-api-client/api";
+import { Product } from "api/minanamanila-api-client/api";
 import { ProductGridWithApi } from "customer-components/productgrid/ProductGridWithApi";
 import { config } from "axiosConfig";
 import { CartContext } from "context/CartContext";
+import PublicApi from "api/PublicApi";
 
 export interface ProductDetailProps {
   username: string;
@@ -37,9 +35,10 @@ export const ProductDetailWithApi: React.FC<{}> = () => {
 
   React.useEffect(() => {
     const getProducts = async () => {
-      const publicApi = PublicControllerApiFactory(config);
-      const result = await publicApi.getProductUsingGET(Number(id));
-      setProduct(result.data);
+      if (!!id) {
+        const result = await PublicApi.getProductDetail(parseInt(id as string));
+        setProduct(result.data);
+      }
     };
 
     getProducts();

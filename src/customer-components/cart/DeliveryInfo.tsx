@@ -1,30 +1,48 @@
-import React from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import { OrderComponentProps, DeliveryData } from "./OrderModel";
+import { KeyboardDatePicker } from "@material-ui/pickers";
 import {
   OrderDtoDeliveryTypeEnum,
   OrderDtoPaymentTypeEnum,
-} from "../../api/models";
-import dateformat from "dateformat";
+} from "api/minanamanila-api-client/api";
+import React from "react";
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import {
+  DeliveryData,
+  OrderComponentFormProps,
+  OrderComponentProps,
+} from "./OrderModel";
 
-const formatDate = (date?: Date) => {
-  if (!date) return undefined;
-  return dateformat(date, "ddd mmmm d");
-};
-
-const DeliveryInfo: React.FC<OrderComponentProps> = (props) => {
+const DeliveryInfo: React.FC<OrderComponentProps & OrderComponentFormProps> = (
+  props
+) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    if (props.onValidate && props.onNext) {
-      const submit = props.onValidate();
-      submit && props.onNext();
+    if (props.onNext) {
+      const isValid = !Object.values(props.data.deliveryForm.formErrors).every(
+        (value) => value
+      );
+      // console.log(
+      //   "isvalid",
+      //   Object.values(props.data.deliveryForm.formErrors),
+      //   isValid
+      // );
+      if (isValid) {
+        props.onNext();
+      }
     }
   };
 
   const handleChange = (e: any) => {
-    props.onChange && props.onChange(e);
+    if (props.onChange) {
+      props.onChange(e.target.name, e.target.value);
+    }
+  };
+
+  const handleChangeDatepicker = (name: string, date: Date | null) => {
+    if (props.onChange) {
+      props.onChange(name, date);
+    }
   };
 
   const { formValues, formErrors } = props.data.deliveryForm;
@@ -63,27 +81,6 @@ const DeliveryInfo: React.FC<OrderComponentProps> = (props) => {
         return <div></div>;
     }
   };
-
-  const deliverySchedule = (
-    <Form.Group controlId="delivery-date">
-      <Form.Label>Preferred delivery date</Form.Label>
-      <Form.Control
-        as="select"
-        name="delivery-date"
-        onChange={props.onChange}
-        value={formValues.deliveryDateId || ""}
-      >
-        {props.data.availableDeliveryDates?.map((date) => (
-          <option key={date.id} value={date?.id}>
-            {formatDate(date?.date)}
-          </option>
-        ))}
-      </Form.Control>
-      <Form.Control.Feedback type="invalid">
-        {formErrors.deliveryDateId}
-      </Form.Control.Feedback>
-    </Form.Group>
-  );
 
   return (
     <div className="app-container">
@@ -178,7 +175,21 @@ const DeliveryInfo: React.FC<OrderComponentProps> = (props) => {
 
               {addressSection()}
 
-              {deliverySchedule}
+              <KeyboardDatePicker
+                disableToolbar
+                variant="inline"
+                format="MM/dd/yyyy"
+                margin="normal"
+                id="date-picker-inline"
+                label="Delivery date"
+                value={formValues.deliveryDate}
+                onChange={(date) =>
+                  handleChangeDatepicker("deliveryDate", date)
+                }
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+              />
 
               <div className="bold-title">Payment information</div>
 

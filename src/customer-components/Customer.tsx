@@ -5,11 +5,8 @@ import Order from "./cart/Order";
 import instagramLogo from "./icons8-instagram-96.png";
 import logoImage from "./minanamanila_thread.png";
 import "./Customer.scss";
-import { Feature } from "@paralleldrive/react-feature-toggles";
-import NotFoundComponent from "NotFoundComponent";
-import { ProductPage, ProductRequiredDto } from "./product/ProductPage";
 import { Routes } from "Routes";
-import { CustomerContext, CheckoutCart } from "./CustomerContext";
+import { CustomerContext } from "./CustomerContext";
 import { ProductDetailWithApi } from "./detail/ProductDetail";
 import { MyNavbar } from "./navbar/Navbar";
 import { MySideBar } from "./sidebar/MySideBar";
@@ -22,77 +19,6 @@ import CartContextProvider from "context/CartContext";
 import CartPage from "./cart-page/CartPage";
 
 const Customer: React.FC<{}> = () => {
-  const [cart, setCart] = React.useState<CheckoutCart>({
-    items: [],
-    total: 0,
-    numberOfItems: 0,
-  });
-
-  const handleCartChange = (
-    product: ProductRequiredDto,
-    operation: "increase" | "decrease" | "set",
-    quantity?: number
-  ) => {
-    setCart((cart) => {
-      const itemIndex = cart.items.findIndex((i) => i.id === product.id);
-      let newItems = cart.items;
-      let numberOfItems = 0;
-      if (itemIndex > -1) {
-        const oldQuantity = newItems[itemIndex].quantity;
-        let changeInQuantity = 0;
-        if (operation === "set" && !!quantity) {
-          changeInQuantity = quantity - oldQuantity;
-        } else if (operation === "increase") {
-          changeInQuantity = 1;
-        } else if (operation === "decrease") {
-          changeInQuantity = -1;
-        }
-        const newQuantity = oldQuantity + changeInQuantity;
-        numberOfItems = numberOfItems + changeInQuantity;
-
-        newItems = cart.items
-          .map((p) => {
-            if (p.id === product.id) {
-              return {
-                ...p,
-                quantity: newQuantity,
-              };
-            } else {
-              return p;
-            }
-          })
-          .filter((p) => p.quantity > 0);
-      } else {
-        product.quantity += 1;
-        numberOfItems += product.quantity;
-        newItems = [...newItems, product];
-      }
-      const total = newItems.reduce(
-        (prev, cur) => prev + cur.quantity * cur.unitPrice,
-        0
-      );
-      console.log("new cart", {
-        ...cart,
-        items: [...newItems, product],
-        numberOfItems,
-        total,
-      });
-      return {
-        ...cart,
-        items: newItems,
-        numberOfItems,
-        total,
-      };
-    });
-  };
-
-  const handleAddToCart = (
-    product: ProductRequiredDto,
-    operation: "increase" | "decrease" | "set"
-  ) => {
-    handleCartChange(product, operation);
-  };
-
   const [sideBarOpen, setSideBarOpen] = React.useState<boolean>(false);
   const toggleSidebar = () => setSideBarOpen((oldValue) => !oldValue);
 
@@ -100,9 +26,6 @@ const Customer: React.FC<{}> = () => {
     <div className="app-container">
       <CustomerContext.Provider
         value={{
-          cart,
-          onAddToCart: handleAddToCart,
-          onCartChange: handleCartChange,
           sideBarOpen,
           toggleSidebar,
         }}
@@ -117,18 +40,7 @@ const Customer: React.FC<{}> = () => {
                 <MyNavbar toggleSideBar={toggleSidebar} />
                 <Switch>
                   <Route path={Routes.Checkout}>
-                    <Feature
-                      name="online-order"
-                      inactiveComponent={NotFoundComponent}
-                      activeComponent={Order}
-                    />
-                  </Route>
-                  <Route path={Routes.Products}>
-                    <Feature
-                      name="online-order"
-                      inactiveComponent={NotFoundComponent}
-                      activeComponent={ProductPage}
-                    />
+                    <Order />
                   </Route>
                   <Route path={Routes.Tawad}>
                     <TheTawadPage />
