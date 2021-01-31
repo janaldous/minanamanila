@@ -1,6 +1,5 @@
 import React from "react";
 import OrderApi from "../api/OrderApi";
-import { OrderDetail } from "../api/models/OrderDetail";
 import Table from "@material-ui/core/Table";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableBody from "@material-ui/core/TableBody";
@@ -11,6 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import { OrderDetail } from "api/minanamanila-api-client/api";
 
 const OrderAdmin: React.FC = () => {
   const [orders, setOrders] = React.useState<Array<OrderDetail>>([]);
@@ -20,14 +20,16 @@ const OrderAdmin: React.FC = () => {
   React.useEffect(() => {
     (async () => {
       const token = await getAccessTokenSilently();
-      setErrorMessage("loading...")
-      OrderApi.getOrders(token).then((res) => {
-        setOrders(res.data);
-        setErrorMessage("hello world");
-      }).catch((err) => {
-        setErrorMessage("an error occurred: " +  err.status);
-      });
-    })()
+      setErrorMessage("loading...");
+      OrderApi.getOrders(token)
+        .then((res) => {
+          setOrders(res.data);
+          setErrorMessage("hello world");
+        })
+        .catch((err) => {
+          setErrorMessage("an error occurred: " + err.status);
+        });
+    })();
   }, [getAccessTokenSilently]);
 
   return (
@@ -54,9 +56,9 @@ const OrderAdmin: React.FC = () => {
                 <TableCell>{row.tracking?.status}</TableCell>
                 <TableCell>
                   <Link to={`/orders/${row.id}`}>
-                  <Button variant="contained" color="primary">
-                    View
-                  </Button>
+                    <Button variant="contained" color="primary">
+                      View
+                    </Button>
                   </Link>
                 </TableCell>
               </TableRow>

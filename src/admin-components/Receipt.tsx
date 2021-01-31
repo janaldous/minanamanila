@@ -1,5 +1,4 @@
 import React from "react";
-import { OrderDetail } from "../api/models";
 
 import "./Receipt.scss";
 import Data from "./Data";
@@ -12,6 +11,7 @@ import {
   TableCell,
   TableBody,
 } from "@material-ui/core";
+import { OrderDetail } from "api/minanamanila-api-client/api";
 
 const Receipt: React.FC<{ orderDetail?: OrderDetail }> = (props) => {
   if (!props.orderDetail) {

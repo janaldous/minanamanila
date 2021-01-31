@@ -8,6 +8,7 @@ import queryString from "query-string";
 import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import "date-fns";
+import Auth0ProviderWithHistory from "admin-components/Auth0ProviderWithHistory";
 
 const initialFeatures = ["online-order"];
 
@@ -22,16 +23,18 @@ function App() {
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <FeatureToggles features={features}>
         <ErrorBoundary>
-          <Router>
-            <Switch>
-              <Route path="/admin">
-                <Admin />
-              </Route>
-              <Route path="/">
-                <Customer />
-              </Route>
-            </Switch>
-          </Router>
+          <Auth0ProviderWithHistory>
+            <Router>
+              <Switch>
+                <Route path="/admin">
+                  <Admin />
+                </Route>
+                <Route path="/">
+                  <Customer />
+                </Route>
+              </Switch>
+            </Router>
+          </Auth0ProviderWithHistory>
         </ErrorBoundary>
       </FeatureToggles>
     </MuiPickersUtilsProvider>

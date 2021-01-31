@@ -1,7 +1,6 @@
 import React from "react";
 import OrderApi from "../api/OrderApi";
 import {
-  OrderDetail as OrderDetailModel,
   OrderTrackingStatusEnum,
   OrderUpdateDtoStatusEnum,
   OrderDetailDeliveryTypeEnum,
@@ -19,13 +18,18 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import dateFormat from "dateformat";
 import Data from "./Data";
+import { OrderDetail } from "api/minanamanila-api-client/api";
 
-const OrderDetail: React.FC = () => {
-  const [order, setOrder] = React.useState<OrderDetailModel>();
+interface OrderDetailPageRouteParams {
+  id: string;
+}
+
+const OrderDetailPage: React.FC = () => {
+  const [order, setOrder] = React.useState<OrderDetail>();
   const [open, setOpen] = React.useState(false);
   const [status, setStatus] = React.useState<OrderTrackingStatusEnum>();
 
-  const { id } = useParams();
+  const { id } = useParams<OrderDetailPageRouteParams>();
 
   React.useEffect(() => {
     OrderApi.getOrder(id).then((res) => {
@@ -102,14 +106,20 @@ const OrderDetail: React.FC = () => {
           Update status
         </Button>
       </div>
-      <Data name={"Last updated"} value={dateFormat(order?.tracking?.dateLastUpdated)} />
+      <Data
+        name={"Last updated"}
+        value={dateFormat(order?.tracking?.dateLastUpdated)}
+      />
       <br />
       <Receipt orderDetail={order} />
       <br />
       <div>
         <b>Customer</b>
       </div>
-      <Data name={"Name"} value={`${order?.user?.firstName} ${order?.user?.lastName}`} />
+      <Data
+        name={"Name"}
+        value={`${order?.user?.firstName} ${order?.user?.lastName}`}
+      />
       <Data name={"Contact number"} value={order?.user?.contactNumber} />
       <br />
 
@@ -120,7 +130,7 @@ const OrderDetail: React.FC = () => {
       {deliveryInfo}
       <Data
         name={"Delivery date"}
-        value={dateFormat(order?.deliveryDate?.date, "ddd, mmmm d, yyyy")}
+        value={dateFormat(order?.deliveryDate, "ddd, mmmm d, yyyy")}
       />
       <br />
       <div>
@@ -175,4 +185,4 @@ const OrderDetail: React.FC = () => {
   );
 };
 
-export default OrderDetail;
+export default OrderDetailPage;

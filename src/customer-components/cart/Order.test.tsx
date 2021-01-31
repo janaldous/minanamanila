@@ -20,7 +20,7 @@ import ReactTestUtils from "react-dom/test-utils";
 import { MemoryRouter } from "react-router-dom";
 import { mocked } from "ts-jest/utils";
 import PublicApi from "../../api/PublicApi";
-import { getInitialCartContext, getInitialCartState } from "./cartTestUtil";
+import { getInitialCartContext } from "./cartTestUtil";
 import Order from "./Order";
 import { DeliveryData } from "./OrderModel";
 

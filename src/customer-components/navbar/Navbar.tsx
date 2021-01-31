@@ -9,13 +9,16 @@ import SearchIcon from "@material-ui/icons/Search";
 import { CartContext } from "context/CartContext";
 import { useHistory } from "react-router-dom";
 import { Routes } from "Routes";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const MyNavbar: React.FC<{ toggleSideBar: () => void }> = (props) => {
   const [show, setShow] = React.useState(false);
   const history = useHistory();
+  const { isAuthenticated, logout, loginWithRedirect, user } = useAuth0();
+
+  console.log("user", user);
 
   const handleClosePopup = () => setShow(false);
-  const handleShowPopup = () => setShow(true);
 
   const handleShowCart = () => history.push(Routes.Cart);
 
@@ -33,8 +36,25 @@ export const MyNavbar: React.FC<{ toggleSideBar: () => void }> = (props) => {
         <div className="flex-1-only">
           <div className="d-flex flex-row-reverse">
             <div
-              className="font-weight-bold cursor-pointer"
-              onClick={handleShowPopup}
+              className={`font-weight-bold cursor-pointer pr-3 ${
+                isAuthenticated && !!user?.name ? "" : "d-none"
+              }`}
+            >
+              {user?.name}
+            </div>
+            <div
+              className={`font-weight-bold cursor-pointer pr-3 ${
+                isAuthenticated ? "" : "d-none"
+              }`}
+              onClick={() => logout()}
+            >
+              Logout
+            </div>
+            <div
+              className={`font-weight-bold cursor-pointer pr-3 ${
+                isAuthenticated ? "d-none" : ""
+              }`}
+              onClick={loginWithRedirect}
             >
               Login
             </div>

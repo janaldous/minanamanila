@@ -19,6 +19,12 @@ const CartPage: React.FC<{}> = () => {
     history.push(Routes.Checkout);
   };
 
+  if (cart.items.length === 0) {
+    return (
+      <div className="d-flex justify-content-center">Your cart is empty</div>
+    );
+  }
+
   return (
     <section id="order">
       <div className="row justify-content-center">

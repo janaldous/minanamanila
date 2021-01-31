@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import OrderDetail from "./OrderDetail";
+import OrderDetailPae from "./OrderDetail";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import OrderApi from "../api/OrderApi";
@@ -65,12 +65,12 @@ describe("OrderDetail", () => {
     const history = createMemoryHistory();
     history.push("/admin/order/123");
 
-    const mockPromise = Promise.resolve({data: mockResponse});
+    const mockPromise = Promise.resolve({ data: mockResponse });
     OrderApi.getOrder = jest.fn().mockReturnValue(mockPromise);
 
     render(
       <Router history={history}>
-        <OrderDetail />
+        <OrderDetailPae />
       </Router>
     );
 

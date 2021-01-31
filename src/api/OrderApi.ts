@@ -1,22 +1,20 @@
 import axios, { AxiosPromise } from "axios";
 import {
-  GetOrdersUsingGETStatusEnum,
-  OrderUpdateDtoStatusEnum,
+  OrderControllerApiFactory,
   OrderDetail,
-} from "./models";
+  OrderUpdateDtoStatusEnum,
+} from "./minanamanila-api-client/api";
+import { GetOrdersUsingGETStatusEnum } from "./models";
 import { BASE_PATH } from "./runtime";
 
 export default class OrderApi {
   static getOrders(
-    token: string,
+    accessToken: string,
     status?: GetOrdersUsingGETStatusEnum
   ): AxiosPromise<Array<OrderDetail>> {
-    return axios.get(`${BASE_PATH}/admin/order/`, {
-      params: { status },
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    const publicApi = OrderControllerApiFactory();
+    return publicApi.getOrdersUsingGET(status, {
+      headers: { Authorization: `Bearer ${accessToken}` },
     });
   }
 

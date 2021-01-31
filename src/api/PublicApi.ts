@@ -13,9 +13,16 @@ export default class OrderApi {
     return publicApi.orderUsingPOST(orderDto);
   }
 
-  static getProducts(page: number, size: number): AxiosPromise<PageProduct> {
+  static getProducts(
+    page: number,
+    size: number,
+    accessToken?: string
+  ): AxiosPromise<PageProduct> {
     const publicApi = PublicControllerApiFactory();
-    return publicApi.getProductsUsingGET(page, size);
+    const options = accessToken
+      ? { headers: { Authorization: `Bearer ${accessToken}` } }
+      : undefined;
+    return publicApi.getProductsUsingGET(page, size, options);
   }
 
   static getProductSuggestions(id: number): AxiosPromise<PageProduct> {
