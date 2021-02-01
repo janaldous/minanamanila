@@ -3,7 +3,7 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import { OrderDto } from "api/minanamanila-api-client/api";
 import { CartContext } from "context/CartContext";
 import { CartState } from "context/CartReducer";
-import { format } from "date-fns";
+import { format, startOfTomorrow } from "date-fns";
 import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Spinner from "react-bootstrap/Spinner";
@@ -45,6 +45,8 @@ export default function Order() {
     handleChange("firstName", user?.given_name);
     handleChange("lastName", user?.family_name);
     handleChange("auth0Id", user?.sub);
+    handleChange("city", "Sta. Rosa");
+    handleChange("deliveryDate", startOfTomorrow());
   }, [user]);
 
   const [step, setStep] = React.useState<number>(0);

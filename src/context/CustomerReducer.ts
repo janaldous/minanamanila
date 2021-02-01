@@ -10,6 +10,7 @@ export const customerReducer = (state: CartState, action): CartState => {
         ...state.deliveryForm,
         formValues: { ...state.deliveryForm.formValues, [name]: value },
         formTouched: { ...state.deliveryForm.formTouched, [name]: true },
+        formErrors: {},
       };
 
       if (
@@ -24,17 +25,15 @@ export const customerReducer = (state: CartState, action): CartState => {
 
       const errors = validate(newDeliveryFormData.formValues);
       if (newDeliveryFormData.formTouched) {
-        newDeliveryFormData.formErrors = {
-          ...newDeliveryFormData.formErrors,
-          [name]: errors[name],
-        };
+        for (let key in errors) {
+          newDeliveryFormData.formErrors = {
+            ...newDeliveryFormData.formErrors,
+            [key]: errors[key],
+          };
+        }
       }
       newDeliveryFormData.isSubmitting = Object.keys(errors).length === 0;
 
-      console.log({
-        ...state,
-        deliveryForm: newDeliveryFormData,
-      });
       return {
         ...state,
         deliveryForm: newDeliveryFormData,
@@ -45,6 +44,25 @@ export const customerReducer = (state: CartState, action): CartState => {
         orderConfirmation: {
           orderNumber: action.payload.confirmationNumber,
         },
+      };
+    case "VALIDATE_ORDER":
+      const newDeliveryFormData2: DeliveryFormType = {
+        ...state.deliveryForm,
+      };
+
+      const errors2 = validate(newDeliveryFormData2.formValues);
+      if (newDeliveryFormData2.formTouched) {
+        newDeliveryFormData2.formErrors = {
+          ...newDeliveryFormData2.formErrors,
+          [name]: errors2[name],
+        };
+      }
+
+      newDeliveryFormData2.isSubmitting = Object.keys(errors).length === 0;
+
+      return {
+        ...state,
+        deliveryForm: newDeliveryFormData2,
       };
     default:
       return state;

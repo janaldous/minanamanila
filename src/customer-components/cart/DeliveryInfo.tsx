@@ -19,14 +19,7 @@ const DeliveryInfo: React.FC<OrderComponentProps & OrderComponentFormProps> = (
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (props.onNext) {
-      const isValid = !Object.values(props.data.deliveryForm.formErrors).every(
-        (value) => value
-      );
-      // console.log(
-      //   "isvalid",
-      //   Object.values(props.data.deliveryForm.formErrors),
-      //   isValid
-      // );
+      const isValid = props.data.deliveryForm.isSubmitting;
       if (isValid) {
         props.onNext();
       }
@@ -46,6 +39,8 @@ const DeliveryInfo: React.FC<OrderComponentProps & OrderComponentFormProps> = (
   };
 
   const { formValues, formErrors } = props.data.deliveryForm;
+
+  console.log(formErrors);
 
   const addressSection = () => {
     switch (formValues.deliveryType) {

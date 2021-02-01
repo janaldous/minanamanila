@@ -184,6 +184,7 @@ describe("Order component", () => {
         specialInstructions: "My special instructions",
         deliveryType: OrderDtoDeliveryTypeEnum.DELIVER,
       },
+      isSubmitting: true,
     };
 
     const renderResult = renderWithRouter(<Order />, initialCartContext);
@@ -249,6 +250,7 @@ describe("Order component", () => {
         ...defaultValues,
         specialInstructions: "Please leave the parcel at the guardhouse",
       },
+      isSubmitting: true,
     };
     const renderResult = renderWithRouter(<Order />, initialCartContext);
     const { getByTestId, getByText } = renderResult;
@@ -277,6 +279,7 @@ describe("Order component", () => {
         ...defaultValues,
         specialInstructions: "Please leave the parcel at the guardhouse",
       },
+      isSubmitting: true,
     };
     const renderResult = renderWithRouter(<Order />, initialCartContext);
     const { getByTestId, getByText } = renderResult;
@@ -346,6 +349,7 @@ describe("Order component", () => {
         ...initialCartContext.cart.deliveryForm.formValues,
         ...defaultValues,
       },
+      isSubmitting: true,
     };
     const renderResult = renderWithRouter(<Order />, initialCartContext);
     const { getByText } = renderResult;
@@ -369,11 +373,12 @@ describe("Order component", () => {
         ...initialCartContext.cart.deliveryForm.formValues,
         ...defaultValues,
       },
+      isSubmitting: true,
     };
     PublicApi.postOrder = jest.fn().mockRejectedValue({});
 
     const renderResult = renderWithRouter(<Order />, initialCartContext);
-    const { getByText } = renderResult;
+    const { getByText, container } = renderResult;
 
     fireEvent.click(getByText("Two more steps"));
 
