@@ -9,7 +9,7 @@ import { BASE_PATH } from "./runtime";
 
 export default class OrderApi {
   static getOrders(
-    accessToken: string,
+    accessToken?: string,
     status?: GetOrdersUsingGETStatusEnum
   ): AxiosPromise<Array<OrderDetail>> {
     const publicApi = OrderControllerApiFactory();
@@ -18,9 +18,10 @@ export default class OrderApi {
     });
   }
 
-  static getOrder(id: string): AxiosPromise<OrderDetail> {
-    return axios.get(`${BASE_PATH}/admin/order/${id}`, {
-      withCredentials: true,
+  static getOrder(id: string, accessToken?: string): AxiosPromise<OrderDetail> {
+    const orderApi = OrderControllerApiFactory();
+    return orderApi.getOrderUsingGET(id, {
+      headers: { Authorization: `Bearer ${accessToken}` },
     });
   }
 

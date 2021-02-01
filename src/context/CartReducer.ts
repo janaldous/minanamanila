@@ -65,6 +65,7 @@ export interface DeliveryData {
   deliveryType?: OrderDtoDeliveryTypeEnum;
   paymentType?: OrderDtoPaymentTypeEnum;
   deliveryDate?: Date;
+  auth0Id?: string;
 }
 
 export interface DeliveryDataTouched {

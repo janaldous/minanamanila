@@ -19,6 +19,7 @@ import Select from "@material-ui/core/Select";
 import dateFormat from "dateformat";
 import Data from "./Data";
 import { OrderDetail } from "api/minanamanila-api-client/api";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface OrderDetailPageRouteParams {
   id: string;
@@ -28,14 +29,18 @@ const OrderDetailPage: React.FC = () => {
   const [order, setOrder] = React.useState<OrderDetail>();
   const [open, setOpen] = React.useState(false);
   const [status, setStatus] = React.useState<OrderTrackingStatusEnum>();
+  const { getAccessTokenSilently } = useAuth0();
 
   const { id } = useParams<OrderDetailPageRouteParams>();
 
   React.useEffect(() => {
-    OrderApi.getOrder(id).then((res) => {
-      setOrder(res.data);
-      setStatus(res.data.tracking?.status);
-    });
+    (async () => {
+      const token = await getAccessTokenSilently();
+      OrderApi.getOrder(id, token).then((res) => {
+        setOrder(res.data);
+        setStatus(res.data.tracking?.status);
+      });
+    })();
   }, [id]);
 
   const handleOpen = () => {

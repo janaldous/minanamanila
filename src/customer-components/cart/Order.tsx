@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import { OrderDto } from "api/minanamanila-api-client/api";
 import { CartContext } from "context/CartContext";
@@ -37,6 +38,14 @@ export default function Order() {
     confirmOrder,
     clearCart,
   } = React.useContext(CartContext);
+
+  const { user } = useAuth0();
+
+  React.useEffect(() => {
+    handleChange("firstName", user?.given_name);
+    handleChange("lastName", user?.family_name);
+    handleChange("auth0Id", user?.sub);
+  }, [user]);
 
   const [step, setStep] = React.useState<number>(0);
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -199,6 +208,7 @@ const getOrderDto = (cart: CartState) => {
       firstName: deliveryInfo.firstName,
       lastName: deliveryInfo.lastName,
       contactNumber: deliveryInfo.contactNumber,
+      auth0Id: deliveryInfo.auth0Id,
     },
   };
 

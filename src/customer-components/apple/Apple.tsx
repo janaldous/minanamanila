@@ -1,25 +1,24 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import Pagination from "@material-ui/lab/Pagination";
 import { PageProduct } from "api/minanamanila-api-client/api";
 import PublicApi from "api/PublicApi";
 import { ProductGrid2 } from "customer-components/productgrid/ProductGrid2";
-import useAuth0Util from "hooks/useAuth0Util";
 import QueryString from "query-string";
 import React from "react";
 import { useLocation } from "react-router-dom";
 import "./Apple.scss";
-
 export const Apple: React.FC<{}> = () => {
   const location = useLocation();
 
-  const { getAccessToken } = useAuth0Util();
+  const { getAccessTokenSilently } = useAuth0();
   const { category } = QueryString.parse(location.search.substring(1));
 
   const [currentPage, setCurrentPage] = React.useState<number>();
   const [productPage, setProductPage] = React.useState<PageProduct>();
 
   const getProducts = async (page = 0) => {
-    const accessToken = getAccessToken();
-    const result = await PublicApi.getProducts(page, 24, accessToken);
+    // const accessToken = await getAccessTokenSilently();
+    const result = await PublicApi.getProducts(page, 24);
     setProductPage(result.data);
     setCurrentPage(result.data.pageable?.pageNumber);
   };

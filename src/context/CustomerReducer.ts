@@ -31,6 +31,10 @@ export const customerReducer = (state: CartState, action): CartState => {
       }
       newDeliveryFormData.isSubmitting = Object.keys(errors).length === 0;
 
+      console.log({
+        ...state,
+        deliveryForm: newDeliveryFormData,
+      });
       return {
         ...state,
         deliveryForm: newDeliveryFormData,

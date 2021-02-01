@@ -708,6 +708,12 @@ export interface User {
      * @type {string}
      * @memberof User
      */
+    auth0Id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
     contactNumber?: string;
     /**
      * 
@@ -746,6 +752,12 @@ export interface User {
  * @interface UserDto
  */
 export interface UserDto {
+    /**
+     * Auth0 id
+     * @type {string}
+     * @memberof UserDto
+     */
+    auth0Id?: string;
     /**
      * 
      * @type {string}

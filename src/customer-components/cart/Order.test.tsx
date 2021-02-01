@@ -223,6 +223,7 @@ describe("Order component", () => {
         firstName: defaultValues.firstName,
         lastName: defaultValues.lastName,
         contactNumber: defaultValues.contactNumber,
+        auth0Id: undefined,
       },
     };
     const mockedApiOrder = mocked(PublicApi.postOrder, true);

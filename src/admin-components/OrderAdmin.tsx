@@ -1,22 +1,21 @@
-import React from "react";
-import OrderApi from "../api/OrderApi";
+import { useAuth0 } from "@auth0/auth0-react";
+import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
-import TableContainer from "@material-ui/core/TableContainer";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
-import { Link } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
 import { OrderDetail } from "api/minanamanila-api-client/api";
+import React from "react";
+import { Link } from "react-router-dom";
+import OrderApi from "../api/OrderApi";
 
 const OrderAdmin: React.FC = () => {
   const [orders, setOrders] = React.useState<Array<OrderDetail>>([]);
   const [errorMessage, setErrorMessage] = React.useState<string>();
   const { getAccessTokenSilently } = useAuth0();
-
   React.useEffect(() => {
     (async () => {
       const token = await getAccessTokenSilently();
@@ -24,13 +23,13 @@ const OrderAdmin: React.FC = () => {
       OrderApi.getOrders(token)
         .then((res) => {
           setOrders(res.data);
-          setErrorMessage("hello world");
+          setErrorMessage("No errors");
         })
         .catch((err) => {
           setErrorMessage("an error occurred: " + err.status);
         });
     })();
-  }, [getAccessTokenSilently]);
+  }, []);
 
   return (
     <div className="admin-order">

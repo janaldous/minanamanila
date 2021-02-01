@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import OrderDetailPae from "./OrderDetail";
+import OrderDetailPage from "./OrderDetail";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import OrderApi from "../api/OrderApi";
@@ -11,6 +11,8 @@ import {
   OrderDetailDeliveryTypeEnum,
 } from "../api/models";
 import { act } from "react-dom/test-utils";
+import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
+import { mocked } from "ts-jest/utils";
 
 const mockResponse: OrderDetailModel = {
   id: 89,
@@ -60,6 +62,16 @@ const mockResponse: OrderDetailModel = {
   },
 };
 
+const user = {
+  email: "johndoe@me.com",
+  email_verified: true,
+  sub: "google-oauth2|12345678901234",
+};
+
+jest.mock("@auth0/auth0-react");
+
+const mockedUseAuth0 = mocked(useAuth0, true);
+
 describe("OrderDetail", () => {
   it("smoke test", async () => {
     const history = createMemoryHistory();
@@ -68,14 +80,24 @@ describe("OrderDetail", () => {
     const mockPromise = Promise.resolve({ data: mockResponse });
     OrderApi.getOrder = jest.fn().mockReturnValue(mockPromise);
 
-    render(
-      <Router history={history}>
-        <OrderDetailPae />
-      </Router>
-    );
+    mockedUseAuth0.mockReturnValue({
+      isAuthenticated: true,
+      user: user,
+      logout: jest.fn(),
+      loginWithRedirect: jest.fn(),
+      getAccessTokenWithPopup: jest.fn(),
+      getAccessTokenSilently: jest.fn(async () => "accesstoken"),
+      getIdTokenClaims: jest.fn(),
+      loginWithPopup: jest.fn(),
+      isLoading: false,
+    });
 
     await act(async () => {
-      await mockPromise;
+      await render(
+        <Router history={history}>
+          <OrderDetailPage />
+        </Router>
+      );
     });
   });
 });
